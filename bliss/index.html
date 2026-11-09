@@ -1,0 +1,514 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content">
+<title>AI LIFE BY PROMPT · BLISS</title>
+<meta name="description" content="BLISS — AI without the chat box. Ask, answer, approve. Concept by Ovi Demetrian.">
+<meta name="theme-color" content="#111317">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="/BLISS/ai-life/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/BLISS/ai-life/icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta property="og:title" content="AI LIFE BY PROMPT · BLISS">
+<meta property="og:description" content="AI without the chat box. Ask, answer, approve — Ovi style.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#111317; --panel:#181b21; --panel2:#1f232b; --line:#2a2f39; --ink:#f2efe8; --dim:#8b909b;
+  --blue:#2f6bff; --red:#ff3b30; --yellow:#ffcc00;
+  --accent:var(--blue);
+  --mono:'JetBrains Mono',ui-monospace,monospace; --sans:'Space Grotesk',system-ui,sans-serif;
+  --gap:10px;
+}
+body[data-tab="av"]{--accent:var(--red)}
+body[data-tab="sound"]{--accent:var(--yellow)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font-family:var(--sans)}
+body{display:flex;flex-direction:column;height:100dvh;overflow:hidden;
+  padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom)}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+
+/* header */
+header{display:flex;align-items:center;gap:10px;padding:10px 14px 6px}
+.mark{width:30px;height:30px;border-radius:8px;flex:none}
+.brand{font-family:var(--mono);font-size:13px;letter-spacing:.14em;white-space:nowrap}
+.brand b{color:var(--accent);font-weight:600;transition:color .3s}
+header .sp{flex:1;min-width:0}
+.pill{font-family:var(--mono);font-size:11px;letter-spacing:.1em;padding:7px 11px;border-radius:999px;
+  border:1px solid var(--line);color:var(--dim);white-space:nowrap}
+#installBtn{display:none;background:var(--accent);color:#111;border-color:transparent;font-weight:600}
+body[data-tab="bliss"] #installBtn,body[data-tab="av"] #installBtn{color:#fff}
+.iconbtn{width:34px;height:34px;border-radius:10px;border:1px solid var(--line);display:grid;place-items:center;color:var(--dim)}
+
+/* tabs */
+nav{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding:4px 14px 8px}
+nav button{font-family:var(--mono);font-size:12px;letter-spacing:.12em;padding:9px 4px;border-radius:10px;
+  border:1px solid var(--line);color:var(--dim);position:relative;overflow:hidden}
+nav button i{font-style:normal;opacity:.6;margin-right:6px}
+nav button::after{content:"";position:absolute;left:0;right:0;bottom:0;height:3px;background:var(--c);opacity:0;transition:.25s}
+nav button[aria-selected="true"]{color:var(--ink);border-color:var(--c);background:color-mix(in srgb,var(--c) 12%,transparent)}
+nav button[aria-selected="true"]::after{opacity:1}
+
+/* three equal regions */
+main{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:1fr 1fr auto;gap:var(--gap);padding:0 14px}
+body.native-keys main{grid-template-rows:1.3fr 1fr}
+body.native-keys #kbd{display:none}
+.frame{min-width:0;position:relative;background:var(--panel);border:1px solid var(--line);min-height:0;display:flex;flex-direction:column}
+.label{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--dim);display:flex;align-items:center;gap:8px}
+.label .n{color:var(--accent)}
+.label .sp{flex:1}
+
+/* answer: upper L */
+#answer{border-radius:18px 18px 18px 4px;padding:14px 16px;transition:border-color .3s,box-shadow .3s}
+#answer.speaking{border-color:var(--accent);border-width:3px;padding:12px 14px;animation:pulse 1.2s ease-in-out infinite}
+@keyframes pulse{50%{box-shadow:0 0 0 6px color-mix(in srgb,var(--accent) 22%,transparent)}}
+.status{display:flex;align-items:center;gap:6px}
+.dot{width:7px;height:7px;border-radius:50%;background:#3ad07a}
+.dot.busy{background:var(--yellow);animation:blink .6s infinite}
+@keyframes blink{50%{opacity:.25}}
+#out{flex:1;overflow:auto;margin-top:8px;font-size:16px;line-height:1.5}
+#out h2{font-size:clamp(22px,6.4vw,30px);line-height:1.12;margin:4px 0 8px;letter-spacing:-.01em}
+#out p{margin:0 0 10px;color:#d9d6cf}
+#out .hint{color:var(--dim);font-size:14px}
+#out ul{margin:0 0 10px;padding-left:20px}
+.actions{display:none;gap:8px;padding-top:8px}
+.actions.on{display:flex}
+.actions button{font-family:var(--mono);font-size:12px;letter-spacing:.08em;padding:9px 12px;border-radius:10px;border:1px solid var(--line)}
+.actions .ok{background:var(--accent);border-color:transparent;color:#111;font-weight:600}
+body[data-tab="bliss"] .actions .ok,body[data-tab="av"] .actions .ok{color:#fff}
+
+/* AI voice: one-of-a-kind round button */
+#voice{position:absolute;right:14px;bottom:12px;width:46px;height:46px;border-radius:50%;
+  background:conic-gradient(var(--blue),var(--red),var(--yellow),var(--blue));padding:3px;display:none}
+#voice span{display:grid;place-items:center;width:100%;height:100%;border-radius:50%;background:var(--panel)}
+#voice.on{display:block}
+
+/* prompt: lower L */
+#prompt{border-radius:4px 18px 18px 18px;padding:12px 14px}
+#q{flex:1;min-height:0;width:100%;resize:none;margin-top:8px;background:transparent;border:0;outline:0;color:var(--ink);
+  font:500 19px/1.4 var(--sans)}
+#q::placeholder{color:#5d626d}
+.row{display:flex;gap:6px;align-items:center;margin-top:6px}
+.chips{display:flex;gap:6px;overflow-x:auto;flex:1;min-width:0;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{font-family:var(--mono);font-size:12px;padding:8px 10px;border-radius:9px;border:1px solid var(--line);color:#c8c5be;white-space:nowrap}
+#mic{width:40px;height:40px;border-radius:10px;border:1px solid var(--line);display:grid;place-items:center;flex:none}
+#mic.live{background:var(--red);border-color:var(--red)}
+#send{height:40px;padding:0 14px;border-radius:10px;background:var(--accent);color:#111;font-family:var(--mono);font-weight:600;font-size:13px;letter-spacing:.08em;flex:none}
+body[data-tab="bliss"] #send,body[data-tab="av"] #send{color:#fff}
+#send:disabled{opacity:.35}
+
+/* keyboard */
+#kbd{padding:8px 0 4px;display:flex;flex-direction:column;gap:6px;user-select:none}
+.krow{display:flex;gap:5px;justify-content:center}
+.k{flex:1;min-width:0;padding:0;max-width:46px;height:42px;border-radius:8px;background:var(--panel2);border:1px solid var(--line);
+  font-family:var(--mono);font-size:16px;display:grid;place-items:center;touch-action:manipulation}
+.k:active{background:var(--accent);color:#111}
+.k.w15{max-width:66px;flex:1.5}.k.w5{max-width:none;flex:5}.k.w2{max-width:80px;flex:2}
+.k.go{background:var(--accent);color:#111;border-color:transparent}
+body[data-tab="bliss"] .k.go,body[data-tab="av"] .k.go{color:#fff}
+.k small{font-size:11px;letter-spacing:.1em}
+
+footer{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 16px 36px;font-size:12px;color:var(--dim)}
+footer em{font-family:Georgia,serif;color:var(--yellow);font-size:13px}
+footer b{color:var(--ink);font-weight:500}
+
+/* sheets */
+.sheet{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:flex-end;z-index:20}
+.sheet.on{display:flex}
+.card{width:100%;max-height:85dvh;overflow:auto;background:var(--panel);border-top:1px solid var(--line);border-radius:20px 20px 0 0;
+  padding:18px 16px calc(18px + env(safe-area-inset-bottom))}
+.card h3{margin:0 0 4px;font-size:20px}
+.card .sub{color:var(--dim);font-size:13px;margin:0 0 14px}
+.card label{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--dim);margin:12px 0 6px}
+.seg{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.seg button{padding:10px;border-radius:10px;border:1px solid var(--line);font-family:var(--mono);font-size:12px}
+.seg button[aria-pressed="true"]{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 15%,transparent)}
+.card input{width:100%;padding:11px 12px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:14px var(--mono)}
+.card .note{font-size:12px;color:var(--dim);margin-top:8px;line-height:1.45}
+.card .done{width:100%;margin-top:16px;padding:12px;border-radius:12px;background:var(--accent);color:#111;font-weight:600}
+body[data-tab="bliss"] .card .done,body[data-tab="av"] .card .done{color:#fff}
+.rec{border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin-bottom:8px}
+.rec .meta{font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--dim)}
+.rec .qq{font-weight:500;margin:4px 0}
+.rec .aa{font-size:13px;color:#c8c5be;white-space:pre-wrap}
+.toggle{display:flex;justify-content:space-between;align-items:center;margin-top:14px;font-size:14px}
+.toggle input{width:auto}
+
+/* signature badge */
+#badge{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(8px + env(safe-area-inset-bottom));z-index:30;font-family:var(--mono);font-size:9.5px;
+  letter-spacing:.14em;padding:6px 10px;border-radius:999px;background:#0b0c0f;border:1px solid var(--yellow);color:var(--yellow);
+  touch-action:none;cursor:grab;box-shadow:0 0 10px rgba(255,204,0,.45);animation:glow 3s ease-in-out infinite;opacity:.92}
+@keyframes glow{50%{box-shadow:0 0 18px rgba(255,204,0,.75),0 0 4px rgba(47,107,255,.6)}}
+@media (min-width:700px){body{max-width:520px;margin:0 auto;border-left:1px solid var(--line);border-right:1px solid var(--line)}}
+@media (max-height:640px){.k{height:36px}#q{font-size:17px}}
+</style>
+</head>
+<body data-tab="bliss">
+
+<header>
+  <img class="mark" src="/BLISS/ai-life/icon.svg" alt="">
+  <div class="brand">AI LIFE <b>BY PROMPT</b></div>
+  <div class="sp"></div>
+  <button id="installBtn" class="pill">INSTALL</button>
+  <button class="iconbtn" id="recordBtn" aria-label="Approved record">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 5h16M4 12h16M4 19h10"/></svg>
+  </button>
+  <button class="iconbtn" id="setBtn" aria-label="Settings">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h0"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></svg>
+  </button>
+</header>
+
+<nav role="tablist">
+  <button role="tab" data-tab="bliss" style="--c:var(--blue)" aria-selected="true"><i>01</i>BLISS</button>
+  <button role="tab" data-tab="av" style="--c:var(--red)" aria-selected="false"><i>02</i>EPIC AV</button>
+  <button role="tab" data-tab="sound" style="--c:var(--yellow)" aria-selected="false"><i>03</i>SOUND</button>
+</nav>
+
+<main>
+  <section class="frame" id="answer" aria-live="polite">
+    <div class="label"><span class="n">01</span> ANSWER <span class="sp"></span>
+      <span class="status"><span class="dot" id="dot"></span><span id="statusTxt">STANDING BY</span></span></div>
+    <div id="out"></div>
+    <div class="actions" id="actions">
+      <button class="ok" id="approve">APPROVE ✓</button>
+      <button id="redo">REDO</button>
+    </div>
+    <button id="voice" aria-label="Hear the answer"><span>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f2efe8" stroke-width="2" stroke-linecap="round"><path d="M4 10v4M8 7v10M12 4v16M16 7v10M20 10v4"/></svg>
+    </span></button>
+  </section>
+
+  <section class="frame" id="prompt">
+    <div class="label"><span class="n">02</span> YOUR PROMPT <span class="sp"></span><span id="engine">DEMO</span></div>
+    <textarea id="q" rows="2" inputmode="none" placeholder="Type a prompt…" aria-label="Your prompt"></textarea>
+    <div class="row">
+      <div class="chips" id="chips"></div>
+      <button id="mic" aria-label="Speak your prompt">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>
+      </button>
+      <button id="send" disabled>ASK →</button>
+    </div>
+  </section>
+
+  <section id="kbd" aria-label="BLISS keyboard"></section>
+</main>
+
+<footer><span>Concept by <b>Ovi Demetrian</b></span><em>“AI predicted, human approved.”</em></footer>
+
+<div class="sheet" id="setSheet"><div class="card">
+  <h3>One chair, any AI</h3>
+  <p class="sub">Demo works offline. Add your own key to talk to a real model — the key stays on this phone.</p>
+  <label>ENGINE</label>
+  <div class="seg" id="engineSeg">
+    <button data-e="demo">DEMO</button><button data-e="claude">CLAUDE</button><button data-e="openai">OPENAI</button>
+  </div>
+  <div id="keyBox">
+    <label>API KEY</label><input id="key" type="password" autocomplete="off" placeholder="paste your key">
+    <label>MODEL</label><input id="model" autocomplete="off">
+    <p class="note">Your key is stored only in this browser and sent only to the provider you pick.</p>
+  </div>
+  <div class="toggle"><span>Use phone keyboard instead of BLISS keys</span><input type="checkbox" id="nativeKeys"></div>
+  <button class="done" id="setDone">DONE</button>
+</div></div>
+
+<div class="sheet" id="recSheet"><div class="card">
+  <h3>The record</h3>
+  <p class="sub">Every answer you approved, saved on this phone.</p>
+  <div id="recList"></div>
+  <button class="done" id="recDone">CLOSE</button>
+</div></div>
+
+<div id="badge">MADE BY OVI WITH CLAUDE</div>
+
+<script>
+const $ = s => document.querySelector(s);
+const store = {
+  get(k, d){ try { const v = localStorage.getItem('ailife.'+k); return v === null ? d : JSON.parse(v); } catch { return d; } },
+  set(k, v){ try { localStorage.setItem('ailife.'+k, JSON.stringify(v)); } catch {} }
+};
+
+/* ---------- tabs ---------- */
+const TABS = {
+  bliss: {
+    title: 'Ask anything.',
+    lead: 'BLISS answers up here. You read it, then approve it or ask again.',
+    hint: 'Type below, tap a starter, or hold the mic and talk.',
+    chips: ['Explain it simply', 'Plan my day', 'Make it shorter'],
+    system: 'You are BLISS, a calm, concise assistant. Answer in plain language, short paragraphs, no filler.'
+  },
+  av: {
+    title: 'Describe a room.',
+    lead: 'BLISS sketches the audio-video system for it — speakers, screens, control.',
+    hint: 'Say the room, its size and what you want it to do.',
+    chips: ['Living room 7.1', 'Patio audio', 'Whole-home music'],
+    system: 'You are BLISS for EPIC AV, a residential AV and smart-home designer. Give a compact system plan: room, speakers, display, source, control, network notes. Brand-neutral unless asked.'
+  },
+  sound: {
+    title: 'Describe a sound.',
+    lead: 'BLISS writes it as a production note you can take to the studio.',
+    hint: 'Groove, tempo, mood, instruments — in your own words.',
+    chips: ['Dry pocket', 'Bass take', 'Half-time'],
+    system: 'You are BLISS SOUND, a music producer. Turn the request into a short production note: tempo, groove, instruments, mix notes, arrangement.'
+  }
+};
+let tab = store.get('tab', 'bliss');
+
+function emptyState(){
+  const t = TABS[tab];
+  $('#out').innerHTML = `<h2>${t.title}</h2><p>${t.lead}</p><p class="hint">${t.hint}</p>`;
+  $('#actions').classList.remove('on'); $('#voice').classList.remove('on');
+  lastQ = ''; lastA = '';
+}
+function setTab(name){
+  tab = name; store.set('tab', name);
+  document.body.dataset.tab = name;
+  document.querySelectorAll('nav button').forEach(b => b.setAttribute('aria-selected', b.dataset.tab === name));
+  $('#chips').innerHTML = TABS[name].chips.map(c => `<button class="chip">${c}</button>`).join('');
+  emptyState(); stopSpeaking();
+}
+document.querySelector('nav').addEventListener('click', e => { const b = e.target.closest('button'); if (b) setTab(b.dataset.tab); });
+$('#chips').addEventListener('click', e => { const c = e.target.closest('.chip'); if (c){ q.value = c.textContent; sync(); ask(); } });
+
+/* ---------- prompt ---------- */
+const q = $('#q');
+const sync = () => { $('#send').disabled = !q.value.trim(); };
+q.addEventListener('input', sync);
+q.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey){ e.preventDefault(); ask(); } });
+$('#send').addEventListener('click', ask);
+
+/* ---------- keyboard ---------- */
+const LAYOUTS = {
+  abc: ['qwertyuiop', 'asdfghjkl', '⇧zxcvbnm⌫', ['123', 'SPACE', '↵']],
+  num: ['1234567890', '-/:;()$&@', '#.,?!\'"⌫', ['ABC', 'SPACE', '↵']]
+};
+let layout = 'abc', shift = false;
+function drawKeys(){
+  const L = LAYOUTS[layout];
+  $('#kbd').innerHTML = L.map((row, i) => {
+    const keys = Array.isArray(row) ? row : [...row];
+    return '<div class="krow">' + keys.map(k => {
+      let cls = 'k', label = k;
+      if (k === '⇧' || k === '⌫' || k === '#') cls += ' w15';
+      if (k === 'SPACE'){ cls += ' w5'; label = '<small>SPACE</small>'; }
+      if (k === '123' || k === 'ABC'){ cls += ' w2'; label = `<small>${k}</small>`; }
+      if (k === '↵'){ cls += ' w2 go'; label = '<small>ASK</small>'; }
+      if (layout === 'abc' && k.length === 1 && /[a-z]/.test(k) && shift) label = k.toUpperCase();
+      if (k === '⇧' && shift) cls += ' go';
+      return `<button class="${cls}" data-k="${k}">${label}</button>`;
+    }).join('') + '</div>';
+  }).join('');
+}
+function insert(txt){
+  const s = q.selectionStart ?? q.value.length, e = q.selectionEnd ?? q.value.length;
+  q.value = q.value.slice(0, s) + txt + q.value.slice(e);
+  q.selectionStart = q.selectionEnd = s + txt.length; sync();
+}
+$('#kbd').addEventListener('pointerdown', e => {
+  const b = e.target.closest('.k'); if (!b) return; e.preventDefault();
+  const k = b.dataset.k;
+  if (navigator.vibrate) navigator.vibrate(6);
+  if (k === '⌫'){
+    const s = q.selectionStart, en = q.selectionEnd;
+    if (s !== en){ q.value = q.value.slice(0, s) + q.value.slice(en); q.selectionStart = q.selectionEnd = s; }
+    else if (s > 0){ q.value = q.value.slice(0, s - 1) + q.value.slice(s); q.selectionStart = q.selectionEnd = s - 1; }
+    sync(); return;
+  }
+  if (k === '⇧'){ shift = !shift; drawKeys(); return; }
+  if (k === '123'){ layout = 'num'; drawKeys(); return; }
+  if (k === 'ABC'){ layout = 'abc'; drawKeys(); return; }
+  if (k === 'SPACE'){ insert(' '); return; }
+  if (k === '↵'){ ask(); return; }
+  insert(shift ? k.toUpperCase() : k);
+  if (shift){ shift = false; drawKeys(); }
+});
+function applyKeys(){
+  const native = store.get('nativeKeys', false);
+  document.body.classList.toggle('native-keys', native);
+  q.setAttribute('inputmode', native ? 'text' : 'none');
+  $('#nativeKeys').checked = native;
+}
+
+/* ---------- engines ---------- */
+const DEFAULT_MODEL = { claude: 'claude-sonnet-5-5', openai: 'gpt-4o-mini' };
+let engine = store.get('engine', 'demo');
+function engineLabel(){ $('#engine').textContent = engine.toUpperCase(); }
+
+async function callClaude(prompt){
+  const r = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json', 'x-api-key': store.get('key.claude', ''),
+      'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true' },
+    body: JSON.stringify({ model: store.get('model.claude', DEFAULT_MODEL.claude), max_tokens: 700,
+      system: TABS[tab].system, messages: [{ role: 'user', content: prompt }] })
+  });
+  const j = await r.json(); if (!r.ok) throw new Error(j.error?.message || r.status);
+  return j.content.map(c => c.text || '').join('');
+}
+async function callOpenAI(prompt){
+  const r = await fetch('https://api.openai.com/v1/chat/completions', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json', authorization: 'Bearer ' + store.get('key.openai', '') },
+    body: JSON.stringify({ model: store.get('model.openai', DEFAULT_MODEL.openai), max_tokens: 700,
+      messages: [{ role: 'system', content: TABS[tab].system }, { role: 'user', content: prompt }] })
+  });
+  const j = await r.json(); if (!r.ok) throw new Error(j.error?.message || r.status);
+  return j.choices[0].message.content;
+}
+
+/* demo answers: offline, honest about being a demo */
+function demo(prompt){
+  const p = prompt.toLowerCase();
+  if (tab === 'sound'){
+    const half = /half/.test(p), bass = /bass/.test(p), dry = /dry|pocket/.test(p);
+    const bpm = (p.match(/(\d{2,3})\s*bpm/) || [])[1] || (half ? 140 : 92);
+    return [
+      `Production note — "${prompt}"`,
+      `• Tempo: ${bpm} BPM${half ? ' felt in half-time (snare on 3)' : ''}`,
+      `• Groove: ${dry ? 'tight and dry — drums close-miked, no room, short decays' : 'laid-back, slightly behind the beat'}`,
+      `• Low end: ${bass ? 'bass leads the take — round fingered tone, DI plus a touch of amp, sits on the kick' : 'bass locked to the kick, mono below 120 Hz'}`,
+      `• Mix: vocals forward, one short plate, keep the sides for keys and guitar`,
+      `• Arrangement: 4-bar intro → verse → lift → chorus, drop drums for the last bar before each chorus`
+    ].join('\n');
+  }
+  if (tab === 'av'){
+    const patio = /patio|outdoor|pool/.test(p), whole = /whole|house|home music|zones/.test(p), surround = /7\.1|5\.1|theater|theatre|movie/.test(p);
+    if (patio) return 'Patio audio plan\n• Speakers: weather-rated pair under the eaves, plus a buried sub near the planter\n• Amp: two-channel streaming amp in the rack, line run outside in conduit\n• Control: grouped into the house music system, one volume limit for neighbours\n• Network: wired drop to the amp; no Wi-Fi guessing outdoors';
+    if (whole) return 'Whole-home music plan\n• Zones: kitchen, living, primary bedroom, patio\n• Each zone: in-ceiling pair driven by a streaming amp in one central rack\n• Control: phone app plus one wall keypad per zone for the guests\n• Network: every amp hard-wired, music on its own VLAN';
+    if (surround) return 'Living room 7.1 plan\n• Front: L/C/R behind or under the screen, centre at ear height\n• Sides + rears: in-wall pairs, slightly above ear level\n• Sub: one front corner to start, second sub opposite if the room booms\n• Display: 77–85" at about 1.2× screen width viewing distance\n• Control: one remote, one "Watch" scene that sets lights, shades and inputs';
+    return `System sketch — "${prompt}"\n• Sound: a speaker pair sized to the room, plus a sub if it's over 250 sq ft\n• Picture: screen sized for the seat distance\n• Source: one streamer, everything else on HDMI to a single input point\n• Control: one scene per activity — Watch, Listen, Off\n• Network: wire what doesn't move`;
+  }
+  if (/plan/.test(p) && /day/.test(p)) return 'A calm day, three blocks\n• Morning: the one hard thing first, phone face-down\n• Midday: errands and replies in one batch\n• Afternoon: build something small, then stop on time';
+  if (/short/.test(p)) return 'Say less. Mean all of it.';
+  if (/simpl/.test(p)) return 'Pick the topic, and BLISS explains it like a friend would — one idea at a time, no jargon. Try: "Explain how Wi-Fi works simply."';
+  return `Demo answer for "${prompt}".\n\nThis is BLISS in demo mode — the layout and flow are real, the words are canned. Open settings (top right) and add a Claude or OpenAI key to get real answers in the same chair.`;
+}
+
+/* ---------- ask / render ---------- */
+let lastQ = '', lastA = '', busy = false;
+const esc = s => s.replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
+function render(text){
+  const lines = esc(text).split('\n');
+  let html = '', list = false;
+  lines.forEach((l, i) => {
+    const t = l.trim();
+    if (/^[•\-*]\s/.test(t)){ if (!list){ html += '<ul>'; list = true; } html += `<li>${t.slice(2)}</li>`; return; }
+    if (list){ html += '</ul>'; list = false; }
+    if (!t) return;
+    html += i === 0 && t.length < 70 ? `<h2>${t}</h2>` : `<p>${t}</p>`;
+  });
+  if (list) html += '</ul>';
+  $('#out').innerHTML = html;
+  $('#out').scrollTop = 0;
+}
+function setStatus(txt, isBusy){ $('#statusTxt').textContent = txt; $('#dot').classList.toggle('busy', !!isBusy); }
+
+async function ask(){
+  const prompt = q.value.trim(); if (!prompt || busy) return;
+  busy = true; stopSpeaking(); setStatus('THINKING', true);
+  $('#actions').classList.remove('on'); $('#voice').classList.remove('on');
+  $('#out').innerHTML = '<p class="hint">…</p>';
+  try {
+    let a;
+    if (engine === 'claude' && store.get('key.claude', '')) a = await callClaude(prompt);
+    else if (engine === 'openai' && store.get('key.openai', '')) a = await callOpenAI(prompt);
+    else { await new Promise(r => setTimeout(r, 450)); a = demo(prompt); }
+    lastQ = prompt; lastA = a; render(a);
+    $('#actions').classList.add('on'); $('#voice').classList.add('on');
+    q.value = ''; sync(); setStatus('YOUR CALL');
+  } catch (err){
+    $('#out').innerHTML = `<h2>That didn't go through.</h2><p>${esc(String(err.message || err))}</p><p class="hint">Check the key and model in settings, or switch to Demo.</p>`;
+    setStatus('ERROR');
+  }
+  busy = false;
+}
+$('#redo').addEventListener('click', () => { if (lastQ){ q.value = lastQ; sync(); ask(); } });
+$('#approve').addEventListener('click', () => {
+  if (!lastA) return;
+  const rec = store.get('record', []);
+  rec.unshift({ t: Date.now(), tab, q: lastQ, a: lastA, engine });
+  store.set('record', rec.slice(0, 200));
+  setStatus('APPROVED ✓'); $('#actions').classList.remove('on');
+});
+
+/* ---------- voices: yours (mic) and BLISS (speaker) ---------- */
+const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+let rec = null;
+$('#mic').addEventListener('click', () => {
+  if (!SR){ setStatus('NO MIC HERE'); return; }
+  if (rec){ rec.stop(); return; }
+  rec = new SR(); rec.lang = navigator.language || 'en-US'; rec.interimResults = true;
+  $('#mic').classList.add('live'); setStatus('LISTENING', true);
+  rec.onresult = e => { q.value = [...e.results].map(r => r[0].transcript).join(''); sync(); };
+  rec.onend = () => { $('#mic').classList.remove('live'); rec = null; setStatus('STANDING BY'); if (q.value.trim()) ask(); };
+  rec.onerror = () => { setStatus('MIC BLOCKED'); };
+  rec.start();
+});
+function stopSpeaking(){ try { speechSynthesis.cancel(); } catch {} $('#answer').classList.remove('speaking'); }
+$('#voice').addEventListener('click', () => {
+  if (!('speechSynthesis' in window) || !lastA) return;
+  if (speechSynthesis.speaking){ stopSpeaking(); return; }
+  const u = new SpeechSynthesisUtterance(lastA.replace(/[•]/g, ''));
+  u.onend = u.onerror = () => $('#answer').classList.remove('speaking');
+  $('#answer').classList.add('speaking'); speechSynthesis.speak(u);
+});
+
+/* ---------- settings + record ---------- */
+function paintEngine(){
+  document.querySelectorAll('#engineSeg button').forEach(b => b.setAttribute('aria-pressed', b.dataset.e === engine));
+  $('#keyBox').style.display = engine === 'demo' ? 'none' : 'block';
+  if (engine !== 'demo'){
+    $('#key').value = store.get('key.' + engine, '');
+    $('#model').value = store.get('model.' + engine, DEFAULT_MODEL[engine]);
+  }
+  engineLabel();
+}
+$('#engineSeg').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; saveKey(); engine = b.dataset.e; store.set('engine', engine); paintEngine(); });
+function saveKey(){ if (engine === 'demo') return; store.set('key.' + engine, $('#key').value.trim()); store.set('model.' + engine, $('#model').value.trim() || DEFAULT_MODEL[engine]); }
+$('#setBtn').addEventListener('click', () => { paintEngine(); $('#setSheet').classList.add('on'); });
+$('#setDone').addEventListener('click', () => { saveKey(); $('#setSheet').classList.remove('on'); });
+$('#nativeKeys').addEventListener('change', e => { store.set('nativeKeys', e.target.checked); applyKeys(); });
+$('#recordBtn').addEventListener('click', () => {
+  const r = store.get('record', []);
+  $('#recList').innerHTML = r.length ? r.map(x => `<div class="rec"><div class="meta">${new Date(x.t).toLocaleString()} · ${x.tab.toUpperCase()} · ${x.engine.toUpperCase()}</div><div class="qq">${esc(x.q)}</div><div class="aa">${esc(x.a)}</div></div>`).join('')
+    : '<p class="sub">Nothing approved yet. Ask something, then tap APPROVE.</p>';
+  $('#recSheet').classList.add('on');
+});
+$('#recDone').addEventListener('click', () => $('#recSheet').classList.remove('on'));
+document.querySelectorAll('.sheet').forEach(s => s.addEventListener('click', e => { if (e.target === s){ saveKey(); s.classList.remove('on'); } }));
+
+/* ---------- install ---------- */
+let deferred = null;
+const standalone = matchMedia('(display-mode: standalone)').matches || navigator.standalone;
+window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); deferred = e; if (!standalone) $('#installBtn').style.display = 'block'; });
+$('#installBtn').addEventListener('click', async () => {
+  if (deferred){ deferred.prompt(); await deferred.userChoice; deferred = null; $('#installBtn').style.display = 'none'; }
+  else alert('On iPhone: tap Share, then "Add to Home Screen".');
+});
+window.addEventListener('appinstalled', () => { $('#installBtn').style.display = 'none'; });
+if (/iphone|ipad/i.test(navigator.userAgent) && !standalone) $('#installBtn').style.display = 'block';
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
+
+/* ---------- signature badge (draggable) ---------- */
+(() => {
+  const b = $('#badge'); let sx, sy, ox, oy, drag = false;
+  const pos = store.get('badge', null);
+  if (pos){ Object.assign(b.style,{left:pos.x+'px',top:pos.y+'px',bottom:'auto',transform:'none'}); }
+  b.addEventListener('pointerdown', e => { drag = true; b.setPointerCapture(e.pointerId); const r = b.getBoundingClientRect(); sx = e.clientX; sy = e.clientY; ox = r.left; oy = r.top; });
+  b.addEventListener('pointermove', e => {
+    if (!drag) return;
+    const x = Math.max(4, Math.min(innerWidth - b.offsetWidth - 4, ox + e.clientX - sx));
+    const y = Math.max(4, Math.min(innerHeight - b.offsetHeight - 4, oy + e.clientY - sy));
+    Object.assign(b.style, { left: x + 'px', top: y + 'px', bottom: 'auto', transform: 'none' });
+  });
+  b.addEventListener('pointerup', () => { drag = false; const r = b.getBoundingClientRect(); store.set('badge', { x: r.left, y: r.top }); });
+})();
+
+/* ---------- start ---------- */
+drawKeys(); applyKeys(); engineLabel(); setTab(tab);
+</script>
+</body>
+</html>
