@@ -1,0 +1,17 @@
+{
+  "id": "/portfolio/bliss/app",
+  "name": "AI LIFE BY PROMPT · BLISS",
+  "short_name": "BLISS",
+  "description": "BLISS — AI without the chat box. Ask, answer, approve. Concept by Ovi Demetrian.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#111317",
+  "theme_color": "#111317",
+  "icons": [
+    { "src": "/BLISS/ai-life/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/BLISS/ai-life/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/BLISS/ai-life/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
