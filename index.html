@@ -1,355 +1,197 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Ovi Demetrian — AV systems integrator, interface designer and show logistics. 20+ years building rooms, panels and live shows in Phoenix, AZ.">
-<meta name="theme-color" content="#1F5FD6">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ovi Demetrian — AV, Interfaces, Ideas</title>
+<meta name="description" content="Ovi Demetrian: AV and smart home integrator, mobile interface designer, AI governance researcher. Ask an AI about him, or talk to him directly.">
+<meta property="og:title" content="Ovi Demetrian — the live portfolio">
+<meta property="og:description" content="Not a brochure. A switchboard. Ask an AI about Ovi, or talk to him directly.">
+<meta property="og:image" content="og-image.png">
 <link rel="manifest" href="manifest.json">
-<link rel="icon" href="icon-192.png" type="image/png">
+<link rel="icon" href="icon-192.png">
 <link rel="apple-touch-icon" href="icon-192.png">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Ovi Demetrian — AV · Interfaces · Live Shows">
-<meta property="og:description" content="20+ years building rooms, control panels and live shows. Concepts by Ovi, programmed with Claude.">
-<meta property="og:image" content="https://ovidemetrian.github.io/portfolio/og-image.png">
-<meta property="og:url" content="https://ovidemetrian.github.io/portfolio/">
-<meta name="twitter:card" content="summary">
-<!--ART-->
-<title>Ovi Demetrian Portfolio</title>
-<meta name="claude:viewport-fit-sides" content="cover">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800;900&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<meta name="theme-color" content="#0b0f1e">
+<link rel="alternate" type="text/plain" href="llms.txt" title="AI briefing">
 <style>
-/* Layout: a signal chain — splash meter, then one column of lanes and project tiles, colour coding red→yellow→blue */
-:root{
-  --red:#E63329; --yellow:#FFC20E; --blue:#1F5FD6;
-  --bg:#F5F3EE; --surface:#FFFFFF; --fg:#16181F; --muted:#585C68; --line:#DAD6CC;
-  --on-yellow:#16181F; --link:#1A4FB8;
-  --f-display:"Big Shoulders Display","Arial Narrow",Impact,sans-serif;
-  --f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
-  --f-mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
-}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#0F1219; --surface:#181C26; --fg:#F1EFEA; --muted:#A3A8B5; --line:#2A3040; --link:#7FA8FF; color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#0F1219; --surface:#181C26; --fg:#F1EFEA; --muted:#A3A8B5; --line:#2A3040; --link:#7FA8FF; color-scheme:dark}
-
-html,body{background:var(--bg);color:var(--fg)}
-body{font-family:var(--f-body);font-size:16px;line-height:1.55;margin:0;-webkit-font-smoothing:antialiased}
-.wrap{max-width:760px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 96px}
-a{color:var(--link);text-underline-offset:3px}
-a:focus-visible,button:focus-visible{outline:3px solid var(--yellow);outline-offset:3px;border-radius:4px}
-h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:.95;letter-spacing:.01em}
-.label{font-family:var(--f-mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
-
-/* ---------- SPLASH: 9 s montage, card → photos → card → flies to top ---------- */
-#splash{position:fixed;inset:0;z-index:100;cursor:pointer;overflow:hidden}
-.sp-bg{position:absolute;inset:0;background:#0F1219;transition:opacity .8s ease}
-.slide{position:absolute;left:50%;top:50%;width:min(92vw,720px);height:auto;aspect-ratio:1200/673;max-width:none;object-fit:cover;border-radius:8px;box-shadow:0 20px 60px rgba(0,0,0,.55);opacity:0;transform:translate(-50%,-50%) scale(.97);transition:opacity .6s ease,transform 1.8s ease-out}
-.slide.on{opacity:1;transform:translate(-50%,-50%) scale(1)}
-.sp-cap{position:absolute;left:max(16px,env(safe-area-inset-left,0px));right:max(16px,env(safe-area-inset-right,0px));bottom:calc(28px + env(safe-area-inset-bottom,0px));z-index:2;font:500 12px var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:#fff;text-shadow:0 1px 6px rgba(0,0,0,.8);transition:opacity .4s ease}
-#spCard{position:fixed;left:50%;top:50%;width:min(92vw,720px);height:auto;max-width:none;transform:translate(-50%,-50%);border-radius:8px;box-shadow:0 20px 60px rgba(0,0,0,.55);z-index:3;transition:opacity .6s ease}
-#spCard.off{opacity:0}
-.sp-skip{position:absolute;z-index:4;top:calc(16px + env(safe-area-inset-top,0px));right:max(16px,env(safe-area-inset-right,0px));background:rgba(15,18,25,.6);border:1px solid #3A4155;color:#D5D8E0;font:500 12px var(--f-mono);letter-spacing:.1em;text-transform:uppercase;padding:10px 14px;border-radius:999px;cursor:pointer;min-height:44px;transition:opacity .3s}
-.sp-bar{position:absolute;z-index:4;left:0;right:0;bottom:0;height:5px;background:#232838;transition:opacity .3s}
-.sp-bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#E63329 0 33.3%,#FFC20E 33.3% 66.6%,#1F5FD6 66.6%);animation:fill 9s linear forwards}
-#splash.fly{cursor:default}
-#splash.fly .slide,#splash.fly .sp-bg,#splash.fly .sp-skip,#splash.fly .sp-bar,#splash.fly .sp-cap{opacity:0}
-@keyframes fill{to{width:100%}}
-.topcard{width:100%;max-width:100%;height:auto;border-radius:8px;display:block}
-.splashing .topcard{visibility:hidden}
-
-/* ---------- HERO ---------- */
-.hero{padding-block:20px 28px;display:grid;gap:18px}
-.hero h1{font-weight:900;font-size:clamp(58px,15vw,112px);line-height:.86}
-.hero h1 .dot{color:var(--red)}
-.role{font-family:var(--f-display);font-weight:800;font-size:clamp(22px,5.4vw,30px);line-height:1.1;letter-spacing:.02em}
-.role span:nth-child(1){color:var(--red)}
-.role span:nth-child(3){color:var(--blue)}
-.role span:nth-child(2){background:var(--yellow);color:var(--on-yellow);padding:0 6px}
-.lede{font-size:18px;max-width:58ch;margin:0}
-.meta-row{display:flex;flex-wrap:wrap;gap:8px}
-.chip{font-family:var(--f-mono);font-size:12px;border:1px solid var(--line);border-radius:999px;padding:6px 12px;color:var(--muted);background:var(--surface)}
-.cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
-.btn{display:inline-flex;align-items:center;gap:8px;min-height:48px;padding:0 20px;border-radius:6px;font:600 15px var(--f-body);text-decoration:none;border:2px solid var(--fg);color:var(--fg);background:transparent;cursor:pointer}
-.btn.primary{background:var(--blue);border-color:var(--blue);color:#fff}
-
-section{padding-block:44px 8px;border-top:1px solid var(--line);margin-top:28px}
-section > h2{font-weight:800;font-size:clamp(36px,9vw,52px);margin:8px 0 22px}
-
-/* ---------- SIGNAL CHAIN ---------- */
-.chain{display:grid;gap:0;list-style:none;margin:0;padding:0}
-.chain li{display:grid;grid-template-columns:56px 1fr;gap:16px;position:relative;padding-bottom:26px}
-.chain li:not(:last-child)::after{content:"";position:absolute;left:27px;top:56px;bottom:0;width:2px;background:var(--line)}
-.node{width:56px;height:56px;border-radius:50%;display:grid;place-items:center;font:900 22px var(--f-display);color:#fff}
-.chain li:nth-child(1) .node{background:var(--red)}
-.chain li:nth-child(2) .node{background:var(--yellow);color:var(--on-yellow)}
-.chain li:nth-child(3) .node{background:var(--blue)}
-.chain li:nth-child(4) .node{background:var(--fg);color:var(--bg)}
-.chain h3{font-size:28px;font-weight:800;margin-top:6px}
-.chain p{margin:6px 0 10px;color:var(--muted);max-width:58ch}
-.chain > li > div{min-width:0}
-.specs{font-family:var(--f-mono);font-size:12.5px;line-height:1.7;color:var(--fg)}
-
-/* ---------- FEATURE ROOM ---------- */
-.feature{display:grid;gap:16px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:22px}
-.feature h3{font-size:34px;font-weight:800}
-.feature ul{margin:0;padding-left:18px;display:grid;gap:6px}
-.photos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-.photos figure{margin:0;display:grid;gap:4px;min-width:0}
-.photos .wide{grid-column:1/-1}
-.photos img{width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;border-radius:6px;display:block;max-width:100%}
-.photos figcaption{font-family:var(--f-mono);font-size:11.5px;color:var(--muted);line-height:1.4}
-.ggi{margin:0 0 18px;display:grid;gap:8px}
-.ggi img{width:100%;max-width:520px;height:auto;border-radius:10px;border:1px solid var(--line);display:block}
-.ggi figcaption{font-size:15px;color:var(--muted);max-width:58ch}
-.ggi figcaption strong{font-family:var(--f-display);font-size:24px;color:var(--fg);display:block;line-height:1.1}
-
-/* ---------- PROJECT TILES ---------- */
-.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:14px}
-.tile{display:grid;grid-template-rows:auto auto 1fr auto;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:20px;text-decoration:none;color:var(--fg);position:relative;overflow:hidden;min-height:200px;transition:transform .15s ease,border-color .15s ease}
-a.tile:hover{transform:translateY(-2px);border-color:var(--fg)}
-.tile .sq{width:28px;height:28px;border-radius:4px}
-.tile h3{font-size:30px;font-weight:800}
-.tile p{margin:0;color:var(--muted);font-size:15px}
-.tile .go{font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--link)}
-.tile .go.wip{color:var(--muted)}
-.mx{display:inline-grid;justify-items:center}
-.mx>span{grid-area:1/1;animation:meltA 7s ease-in-out infinite}
-.mx>.ne{animation-name:meltB}
-@keyframes meltA{0%,50%{opacity:1;filter:blur(0)}62%,88%{opacity:0;filter:blur(5px)}100%{opacity:1;filter:blur(0)}}
-@keyframes meltB{0%,50%{opacity:0;filter:blur(5px)}62%,88%{opacity:1;filter:blur(0)}100%{opacity:0;filter:blur(5px)}}
-.c-r{background:var(--red)} .c-y{background:var(--yellow)} .c-b{background:var(--blue)} .c-k{background:var(--fg)}
-
-/* ---------- BUSINESSES ---------- */
-.biz{display:grid;gap:12px}
-.biz a{display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px;padding:18px 0;border-bottom:1px solid var(--line);text-decoration:none;color:var(--fg)}
-.biz strong{font-family:var(--f-display);font-weight:800;font-size:26px;display:block;line-height:1}
-.biz small{color:var(--muted);font-size:14px}
-.biz span.arrow{font:900 26px var(--f-display);color:var(--blue)}
-
-/* ---------- CONTACT ---------- */
-.contact{display:grid;gap:12px}
-.cline{display:flex;flex-wrap:wrap;align-items:center;gap:10px;font-family:var(--f-mono);font-size:16px}
-.cline output{user-select:all;-webkit-user-select:all}
-.copy{min-height:40px;padding:0 14px;border-radius:6px;border:1px solid var(--line);background:var(--surface);color:var(--fg);font:500 12px var(--f-mono);letter-spacing:.08em;text-transform:uppercase;cursor:pointer}
-.motto{font-family:var(--f-display);font-weight:800;font-size:clamp(26px,7vw,40px);line-height:1;margin-top:22px}
-.motto span{color:var(--red)} .motto span+span{color:var(--blue)}
-.card{margin:22px 0 0;display:grid;gap:8px}
-.card img{width:100%;max-width:100%;height:auto;border-radius:8px;border:1px solid var(--line);display:block}
-.card figcaption{font-family:var(--f-mono);font-size:12px;color:var(--muted)}
-footer{margin-top:40px;color:var(--muted);font-size:13px}
-
-/* ---------- BADGE ---------- */
-#badge{position:fixed;right:calc(14px + env(safe-area-inset-right,0px));bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:50;
-  font:600 11px var(--f-mono);letter-spacing:.12em;color:#fff;background:linear-gradient(135deg,#E63329,#1F5FD6);
-  padding:10px 14px;border-radius:999px;touch-action:none;user-select:none;-webkit-user-select:none;cursor:grab;
-  animation:glow 2.6s ease-in-out infinite;border:2px solid #FFC20E}
-#badge:active{cursor:grabbing}
-@keyframes glow{0%,100%{box-shadow:0 0 6px rgba(255,194,14,.55),0 0 18px rgba(31,95,214,.35)}50%{box-shadow:0 0 14px rgba(255,194,14,.9),0 0 32px rgba(230,51,41,.55)}}
-
-@media (prefers-reduced-motion: reduce){
-  *,*::before,*::after{animation-duration:.01ms!important;animation-delay:0s!important;transition:none!important}
-  .sp-bar i{animation:fill 9s linear forwards!important}
-  .mx>span{animation:none!important}
-  .mx>.ne{opacity:0}
-}
+:root{--bg:#0b0f1e;--ink:#f4f1e8;--red:#ff3b3b;--yellow:#ffd23f;--blue:#2f7bff;--dim:#9aa3b8}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+a{color:#6fa8ff}
+header{padding:28px 18px 10px;text-align:center}
+header img.card{width:min(340px,86vw);border-radius:12px;box-shadow:0 0 28px rgba(47,123,255,.45)}
+h1{margin:14px 0 4px;font-size:1.7rem;letter-spacing:.5px}
+.tag{color:var(--dim);margin:0 auto;max-width:560px}
+.motto{color:var(--yellow);font-size:.85rem;margin-top:6px}
+.rooms{position:relative;width:min(560px,92vw);aspect-ratio:16/10;margin:18px auto 0;border-radius:12px;overflow:hidden;background:#000}
+.rooms img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1.2s}
+.rooms img.on{opacity:1}
+main{max-width:980px;margin:0 auto;padding:10px 14px 40px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+section.door{border-radius:16px;padding:16px 16px 12px;background:#121831;border:2px solid var(--c);box-shadow:0 0 18px color-mix(in srgb,var(--c) 35%,transparent)}
+.door h2{margin:0 0 4px;font-size:1.15rem;color:var(--c)}
+.door p{margin:0 0 8px;color:var(--dim);font-size:.92rem}
+.door ul{list-style:none;padding:0;margin:0}
+.door li{margin:6px 0;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.door li a{flex:1}
+.copy{background:none;border:1px solid var(--dim);color:var(--dim);border-radius:8px;font-size:.75rem;padding:2px 8px;cursor:pointer}
+.red{--c:var(--red)}.yellow{--c:var(--yellow)}.blue{--c:var(--blue)}
+.sign{text-align:center;margin:30px auto 0;max-width:640px;font-style:italic;color:var(--yellow)}
+footer{text-align:center;color:var(--dim);font-size:.82rem;padding:20px 14px 60px}
+#badge{position:fixed;right:14px;bottom:14px;z-index:9;padding:8px 14px;border-radius:999px;font-weight:800;letter-spacing:2px;font-size:.8rem;color:#0b0f1e;background:linear-gradient(90deg,var(--red),var(--yellow),var(--blue));box-shadow:0 0 18px var(--yellow);cursor:grab;touch-action:none;user-select:none;animation:glow 2.6s ease-in-out infinite}
+@keyframes glow{50%{box-shadow:0 0 30px var(--blue)}}
 </style>
 </head>
 <body>
 
-<script>document.documentElement.classList.add('splashing');</script>
-<div id="splash" aria-label="Opening Ovi Demetrian portfolio">
-  <div class="sp-bg"></div>
-  <img class="slide" src="room-1.jpg" alt="" data-cap="9-panel video wall · presentation room">
-  <img class="slide" src="room-2.jpg" alt="" data-cap="Wall, repeater display, control desk">
-  <img class="slide" src="room-3.jpg" alt="" data-cap="Screens on every sightline">
-  <img class="slide" src="room-4.jpg" alt="" data-cap="Live from Las Vegas, back into the room">
-  <img class="slide" src="room-5.jpg" alt="" data-cap="Cameras, mixer, DJ and video positions">
-  <div class="sp-cap" id="spCap" aria-hidden="true"></div>
-  <img id="spCard" src="card.jpg" alt="Media Content Delivery business card">
-  <button class="sp-skip" id="skip" type="button">Skip</button>
-  <div class="sp-bar" aria-hidden="true"><i></i></div>
+<header>
+  <img class="card" src="card.jpg" alt="Media Content Delivery business card">
+  <h1>Ovi Demetrian</h1>
+  <p class="tag">Installer and hardware first, then software, then logistics, then working with Claude. 20+ years in sound, AV systems, automation and networking. Phoenix, Arizona.</p>
+  <p class="motto">Screen to screen to screen · any time, any device, any format</p>
+  <div class="rooms" id="rooms" aria-label="Room photos">
+    <img class="on" src="room-1.jpg" alt="Presentation room">
+    <img src="room-2.jpg" alt="Presentation room" loading="lazy">
+    <img src="room-3.jpg" alt="Presentation room" loading="lazy">
+    <img src="room-4.jpg" alt="Presentation room" loading="lazy">
+    <img src="room-5.jpg" alt="Presentation room" loading="lazy">
+  </div>
+</header>
+
+<main>
+<div class="grid">
+
+  <section class="door blue">
+    <h2>Ask an AI about Ovi</h2>
+    <p>Each link opens an AI with the question already typed, pointing at Ovi's briefing file. If a link doesn't open right, tap copy and paste it anywhere.</p>
+    <ul id="ask">
+      <li><a data-ai="claude" data-q="recruiter" href="llms.txt">Recruiter: is Ovi right for this role? (Claude)</a><button class="copy" data-q="recruiter">copy</button></li>
+      <li><a data-ai="chatgpt" data-q="recruiter" href="llms.txt">Recruiter: is Ovi right for this role? (ChatGPT)</a></li>
+      <li><a data-ai="perplexity" data-q="collab" href="llms.txt">Collaborator: what could we build together? (Perplexity)</a><button class="copy" data-q="collab">copy</button></li>
+      <li><a data-ai="claude" data-q="curious" href="llms.txt">Curious: who is the Eternal Bartender? (Claude)</a><button class="copy" data-q="curious">copy</button></li>
+      <li><a href="llms.txt">Read the AI briefing yourself</a></li>
+    </ul>
+  </section>
+
+  <section class="door red">
+    <h2>Talk to Ovi</h2>
+    <p>Emails that are already written. Just fill in the blanks and hit send.</p>
+    <ul>
+      <li><a href="mailto:ovidemetrian@gmail.com?subject=Role%20for%20Ovi%3A%20%5Bjob%20title%5D&body=Hi%20Ovi%2C%0A%0ACompany%3A%0ARole%3A%0ALocation%20%2F%20remote%3A%0AWhat%20caught%20our%20eye%3A%0A%0ABest%20time%20to%20talk%3A">I'm a recruiter with a role</a></li>
+      <li><a href="mailto:ovidemetrian@gmail.com?subject=Let%27s%20build%20something&body=Hi%20Ovi%2C%0A%0AI'd%20like%20to%20build%3A%0AWhy%20you%3A%0ATimeline%3A">I want to build something together</a></li>
+      <li><a href="mailto:ovidemetrian@gmail.com?subject=AV%20%2F%20smart%20home%20project&body=Hi%20Ovi%2C%0A%0AProject%20type%3A%0ALocation%3A%0ARooms%20%2F%20scope%3A">I have an AV or smart home project</a></li>
+      <li><a href="mailto:ovidemetrian@gmail.com">Just say hello</a></li>
+    </ul>
+  </section>
+
+  <section class="door yellow">
+    <h2>See the work</h2>
+    <p>AV, smart homes and the full story.</p>
+    <ul>
+      <li><a href="https://ovidemetrian.github.io/my-future-past">The Future Past: résumé, cover letter, audio demos</a></li>
+      <li><a href="https://www.mediacontentdelivery.com">Media Content Delivery</a></li>
+      <li><a href="https://www.smarthomesbyovi.com">Smart Homes by Ovi: EPIC HOME</a></li>
+      <li><a href="https://ovidemetrian.github.io/Netscape/">NoEscape Navigator</a></li>
+    </ul>
+  </section>
+
+  <section class="door blue">
+    <h2>Apps</h2>
+    <p>Phone-first interfaces, concepts by Ovi, programmed with Claude.</p>
+    <ul>
+      <li><a href="bliss/">BLISS: AI without the box</a></li>
+      <li>EPIC HOME: whole-house control</li>
+      <li>InstaJam: hum, write, make, mix, ship, stage</li>
+      <li>Director's Desk: a tablet broadcast desk</li>
+    </ul>
+  </section>
+
+  <section class="door red">
+    <h2>Sound</h2>
+    <p>Speakers, stages and the matrix of sound.</p>
+    <ul>
+      <li>Demetrian Bridge: a four-speaker matrix of sound</li>
+      <li><a href="https://ovidemetrian.github.io/my-future-past">Tracks and audio demos</a></li>
+    </ul>
+  </section>
+
+  <section class="door yellow">
+    <h2>Ideas</h2>
+    <p>AI governance, built on light, not trickery.</p>
+    <ul>
+      <li><a href="https://10lawsofai.com">The Ten Laws of AI</a></li>
+      <li>GGI: Genial Genuine Intelligence</li>
+      <li>Synthiosis: creation through coexistence</li>
+    </ul>
+  </section>
+
+  <section class="door blue">
+    <h2>The Möbius Bar</h2>
+    <p>After hours. Serious talk. The jokes come on their own.</p>
+    <ul>
+      <li><a href="https://youtube.com/@mobiusbar">Watch the Bar on YouTube</a></li>
+      <li><a data-ai="claude" data-q="curious" href="llms.txt">Ask an AI about the Eternal Bartender</a></li>
+    </ul>
+  </section>
+
+  <section class="door red">
+    <h2>Backstage</h2>
+    <p>Concert-tech years, early live streaming, and building the full show with what you have.</p>
+    <ul>
+      <li><a href="mailto:ovidemetrian@gmail.com?subject=Backstage%20stories">Ask Ovi for the stories</a></li>
+    </ul>
+  </section>
+
+  <section class="door yellow">
+    <h2>Fork this</h2>
+    <p>Make your own live portfolio. Copy the repo, swap in your briefing file and your links.</p>
+    <ul>
+      <li><a href="https://github.com/ovidemetrian/portfolio">The code on GitHub</a></li>
+    </ul>
+  </section>
+
 </div>
 
-<main class="wrap">
-  <header class="hero">
-    <img class="topcard" src="card.jpg" alt="Media Content Delivery: screen to screen to screen. Any time, any device, any format. Compatible, reliable, expandable. (602) 433-2222" width="1200" height="673">
-    <span class="label">Phoenix, Arizona · Media Content Delivery LLC · Screen to screen to screen</span>
-    <h1>Ovi<br>Demetrian<span class="dot">.</span></h1>
-    <p class="role"><span>AV systems</span> <span>interfaces</span> <span>live shows</span></p>
-    <p class="lede">20+ years designing, wiring and delivering the final ten feet of the experience: presentation rooms, smart homes and the control panels people actually touch. Concepts by Ovi, programmed with Claude.</p>
-    <div class="meta-row">
-      <span class="chip">Dante · NDI · HDMI-over-IP</span>
-      <span class="chip">Crestron · Lutron · Control4 · Sonos</span>
-      <span class="chip">RTMP · SRT · HLS</span>
-    </div>
-    <div class="cta">
-      <a class="btn primary" href="#contact">Contact Ovi</a>
-      <a class="btn" href="#work">See the work</a>
-    </div>
-  </header>
-
-  <section aria-labelledby="h-chain">
-    <span class="label">Signal chain</span>
-    <h2 id="h-chain">What I bring</h2>
-    <ol class="chain">
-      <li><span class="node" aria-hidden="true">HW</span><div>
-        <h3>Hardware &amp; install</h3>
-        <p>Rooms built from scratch: rack, cable, lighting, speakers, displays, network. Platform-agnostic, focused on the technology underneath any one brand.</p>
-        <div class="specs">AV over IP · managed switching, VLANs, multicast, QoS · speaker prototyping · digital amplification</div>
-      </div></li>
-      <li><span class="node" aria-hidden="true">SW</span><div>
-        <h3>Software &amp; interfaces</h3>
-        <p>Mobile-first control panels and apps, designed on a phone for people who use a phone. Fixed buttons, colour per room, no hidden gestures.</p>
-        <div class="specs">UI/UX for AV &amp; home control · Progressive Web Apps · “Tap ’n Go” design doctrine</div>
-      </div></li>
-      <li><span class="node" aria-hidden="true">LG</span><div>
-        <h3>Logistics &amp; live shows</h3>
-        <p>From concert gear prep in the early ’90s to running my own rundowns: switcher, live mix, PTZ cameras and streaming out. I lead crews and contractors on bigger builds.</p>
-        <div class="specs">Video switching · live audio mixing · PTZ · streaming · crew coordination</div>
-      </div></li>
-      <li><span class="node" aria-hidden="true">AI</span><div>
-        <h3>Working with Claude</h3>
-        <p>I direct, the AI operates. I bring intent, UX and field experience; Claude writes the code. Every project below was built this way.</p>
-        <div class="specs">Human directs · AI operates · Ten Laws of AI governance</div>
-      </div></li>
-    </ol>
-  </section>
-
-  <section aria-labelledby="h-room">
-    <span class="label">Featured build</span>
-    <h2 id="h-room">The presentation room</h2>
-    <div class="feature">
-      <h3>Corporate broadcast &amp; presentation room, Phoenix HQ</h3>
-      <p style="margin:0">Designed, built and delivered end to end for a CEO's sales presentations.</p>
-      <ul>
-        <li>Two-way broadcasting: room out, Las Vegas events back in</li>
-        <li>Podcast and presentation studio, video-mixing and DJ positions</li>
-        <li>Lighting design and full system build, coordinated with the broadcast station</li>
-        <li>Satellite site linked for podcasts and live video</li>
-      </ul>
-      <div class="photos">
-        <figure class="wide"><img src="room-1.jpg" alt="Nine-panel video wall on an orange wall, with a touchscreen lectern and audience seating" width="1100" height="825" loading="lazy"><figcaption>9-panel video wall (3×3) and touch lectern</figcaption></figure>
-        <figure><img src="room-2.jpg" alt="Room from the back: video wall, ceiling-hung display and control desk" width="1100" height="825" loading="lazy"><figcaption>Wall, repeater display, control desk</figcaption></figure>
-        <figure><img src="room-3.jpg" alt="Wide view of the full room with displays on every side" width="1100" height="825" loading="lazy"><figcaption>Full room, screens on every sightline</figcaption></figure>
-        <figure><img src="room-4.jpg" alt="Control desk monitors showing a live event feed from Las Vegas, with DJ controller and touch panel" width="1100" height="825" loading="lazy"><figcaption>Live from Las Vegas, back into the room</figcaption></figure>
-        <figure><img src="room-5.jpg" alt="Control desk with cameras on tripods, mixer, touch panel and DJ controller" width="1100" height="825" loading="lazy"><figcaption>Cameras, mixer, DJ and video positions</figcaption></figure>
-      </div>
-    </div>
-  </section>
-
-  <section id="work" aria-labelledby="h-work">
-    <span class="label">Panels “Ovi style”</span>
-    <h2 id="h-work">Live projects</h2>
-    <div class="tiles">
-      <a class="tile" href="https://ovidemetrian.github.io/directors-desk/" target="_blank" rel="noopener">
-        <span class="sq c-r"></span><h3>Director's Desk</h3>
-        <p>Tablet broadcast desk: the human directs, Claude operates the room. Cues, cameras, sound and lights on one call sheet.</p>
-        <span class="go">Open the desk →</span></a>
-      <a class="tile" href="https://ovidemetrian.github.io/SONOS-panel/" target="_blank" rel="noopener">
-        <span class="sq c-y"></span><h3>Sonos Panel</h3>
-        <p>Room-first controller from years as a Sonos dealer. Colour per room, fixed buttons, one HUSH for the whole house.</p>
-        <span class="go">Open the panel →</span></a>
-      <a class="tile" href="https://ovidemetrian.github.io/BLISS/" target="_blank" rel="noopener">
-        <span class="sq c-b"></span><h3>BLISS</h3>
-        <p>An AI interface without the chat box. Answer, question and keyboard in three calm regions.</p>
-        <span class="go">Open BLISS →</span></a>
-      <a class="tile" href="https://ovidemetrian.github.io/INSTAJAM/" target="_blank" rel="noopener">
-        <span class="sq c-r"></span><h3>InstaJam</h3>
-        <p>Phone-first music app: hum, write, make, mix, ship, stage.</p>
-        <span class="go">Open InstaJam →</span></a>
-      <div class="tile">
-        <span class="sq c-k"></span><h3>EPIC HOME</h3>
-        <p>Whole-house control panel for Smart Homes by Ovi: lights from any brand, plus install, update and service for each client.</p>
-        <span class="go wip">In progress</span></div>
-      <a class="tile" href="https://ovidemetrian.github.io/Netscape/" target="_blank" rel="noopener">
-        <span class="sq c-y"></span><h3 aria-label="Netscape Navigator, also known as NoEscape Navigator"><span aria-hidden="true">N<span class="mx"><span>et</span><span class="ne">oE</span></span>scape Navigator</span></h3>
-        <p>A tribute to the Netscape era, when I built some of Phoenix's first websites.</p>
-        <span class="go">Open the tribute →</span></a>
-    </div>
-  </section>
-
-  <section aria-labelledby="h-biz">
-    <span class="label">Companies &amp; research</span>
-    <h2 id="h-biz">Where the work lives</h2>
-    <figure class="ggi">
-      <img src="ggi-room.jpg" alt="Concept: a meeting room wall with ChatGPT, Claude, GGI Synthiosis, Gemini and Grok side by side, controlled from a phone panel" width="1099" height="1100" loading="lazy">
-      <figcaption><strong>GGI Control Panel</strong>One room, every AI. A phone panel that puts several AI models on the wall side by side, under one set of rules: the Ten Laws.</figcaption>
-    </figure>
-    <div class="biz">
-      <a href="https://www.mediacontentdelivery.com" target="_blank" rel="noopener"><div><strong>Media Content Delivery</strong><small>Founded 1994 as Absolute Sound Systems · AV for business</small></div><span class="arrow">→</span></a>
-      <a href="https://www.smarthomesbyovi.com" target="_blank" rel="noopener"><div><strong>Smart Homes by Ovi</strong><small>Luxury residential AV and smart home integration</small></div><span class="arrow">→</span></a>
-      <a href="https://10lawsofai.com" target="_blank" rel="noopener"><div><strong>Ten Laws of AI</strong><small>Independent AI governance research · GGI framework</small></div><span class="arrow">→</span></a>
-      <a href="https://ovidemetrian.github.io/my-future-past/" target="_blank" rel="noopener"><div><strong>The Future Past</strong><small>Résumé, cover letter, audio demos and tracks</small></div><span class="arrow">→</span></a>
-    </div>
-  </section>
-
-  <section id="contact" aria-labelledby="h-contact">
-    <span class="label">Contact</span>
-    <h2 id="h-contact">Let's build the room</h2>
-    <div class="contact">
-      <div class="cline"><output id="em">ovidemetrian@gmail.com</output><button class="copy" type="button" data-copy="em">Copy</button></div>
-      <div class="cline"><output id="ph">(602) 433-2222</output><button class="copy" type="button" data-copy="ph">Copy</button></div>
-    </div>
-    <p class="motto"><span>Compatible.</span> Reliable. <span>Expandable.</span></p>
-    <footer>Lumină, nu vrăjeală · light, not trickery. © Ovi Demetrian.</footer>
-  </section>
+<p class="sign">“If you didn't struggle with the thought, the thought isn't yours.”<br>Lumină, nu vrăjală. Light, not trickery.</p>
 </main>
 
-<div id="badge" role="note" aria-label="Made by Ovi with Claude">MADE BY OVI WITH CLAUDE</div>
+<footer>
+  Concept &amp; design: Ovi Demetrian · built with Claude<br>
+  <a href="mailto:ovidemetrian@gmail.com">ovidemetrian@gmail.com</a>
+</footer>
+
+<div id="badge">MADE BY OVI</div>
 
 <script>
 (function(){
-  // Splash: card (centre) → 5 room photos → card → card flies to the top of the page. 9 s, tap to skip.
-  var sp=document.getElementById('splash'), card=document.getElementById('spCard'), cap=document.getElementById('spCap');
-  var slides=[].slice.call(sp.querySelectorAll('.slide')), timers=[], done=false;
-  var root=document.documentElement; root.style.overflow='hidden'; window.scrollTo(0,0);
-  function at(ms,fn){ timers.push(setTimeout(fn,ms)); }
-  function show(i){ slides.forEach(function(el,j){ el.classList.toggle('on',j===i); }); cap.textContent=i>=0?slides[i].dataset.cap:''; }
-  at(1500,function(){ card.classList.add('off'); show(0); });
-  for(var k=1;k<slides.length;k++){ (function(i){ at(1500+1200*i,function(){ show(i); }); })(k); }
-  at(1500+1200*slides.length,function(){ show(-1); card.classList.remove('off'); });
-  at(9000,fly);
-  function fly(){
-    if(done) return; done=true; timers.forEach(clearTimeout);
-    show(-1); card.classList.remove('off'); sp.classList.add('fly');
-    window.scrollTo(0,0);
-    var t=document.querySelector('.topcard').getBoundingClientRect(), c=card.getBoundingClientRect();
-    card.style.transition='none'; card.style.transform='none';
-    card.style.left=c.left+'px'; card.style.top=c.top+'px'; card.style.width=c.width+'px';
-    void card.offsetWidth;
-    card.style.transition='left .9s cubic-bezier(.6,0,.2,1), top .9s cubic-bezier(.6,0,.2,1), width .9s cubic-bezier(.6,0,.2,1), box-shadow .9s ease';
-    card.style.left=t.left+'px'; card.style.top=t.top+'px'; card.style.width=t.width+'px'; card.style.boxShadow='none';
-    setTimeout(function(){ root.classList.remove('splashing'); root.style.overflow=''; sp.hidden=true; },950);
-  }
-  sp.addEventListener('click',fly);
-
-
-  // Copy buttons
-  document.querySelectorAll('.copy').forEach(function(b){
+  var BRIEF='https://ovidemetrian.github.io/portfolio/llms.txt';
+  var Q={
+    recruiter:'Read '+BRIEF+' and tell me, honestly and specifically, whether Ovi Demetrian is a good fit for an AV, live production or interface design role. Include gaps as well as strengths.',
+    collab:'Read '+BRIEF+' and suggest three things I could build together with Ovi Demetrian.',
+    curious:'Read '+BRIEF+' and tell me about the M\u00f6bius Bar and its Eternal Bartender.'
+  };
+  var URL_FOR={
+    claude:function(q){return 'https://claude.ai/new?q='+encodeURIComponent(q)},
+    chatgpt:function(q){return 'https://chatgpt.com/?q='+encodeURIComponent(q)},
+    perplexity:function(q){return 'https://www.perplexity.ai/search?q='+encodeURIComponent(q)}
+  };
+  document.querySelectorAll('a[data-ai]').forEach(function(a){
+    var q=Q[a.dataset.q], f=URL_FOR[a.dataset.ai];
+    if(q&&f){a.href=f(q);a.target='_blank';a.rel='noopener'}
+  });
+  document.querySelectorAll('button.copy').forEach(function(b){
     b.addEventListener('click',function(){
-      var el=document.getElementById(b.dataset.copy), t=el.textContent;
-      function ok(){ b.textContent='Copied'; setTimeout(function(){ b.textContent='Copy'; },1500); }
-      function sel(){ var r=document.createRange(); r.selectNodeContents(el); var s=getSelection(); s.removeAllRanges(); s.addRange(r); b.textContent='Selected'; setTimeout(function(){ b.textContent='Copy'; },1500); }
-      try{ navigator.clipboard.writeText(t).then(ok,sel); }catch(e){ sel(); }
+      var t=Q[b.dataset.q];
+      if(navigator.clipboard){navigator.clipboard.writeText(t).then(function(){b.textContent='copied';setTimeout(function(){b.textContent='copy'},1500)})}
     });
   });
-
-  // Draggable glowing badge, position remembered
-  var bd=document.getElementById('badge'), sx,sy,ox,oy,drag=false;
-  try{ var p=JSON.parse(localStorage.getItem('ovi-badge')); if(p){ bd.style.left=p.x+'px'; bd.style.top=p.y+'px'; bd.style.right='auto'; bd.style.bottom='auto'; } }catch(e){}
-  bd.addEventListener('pointerdown',function(e){ drag=true; bd.setPointerCapture(e.pointerId); var r=bd.getBoundingClientRect(); sx=e.clientX; sy=e.clientY; ox=r.left; oy=r.top; });
-  bd.addEventListener('pointermove',function(e){ if(!drag) return;
-    var x=Math.max(4,Math.min(innerWidth-bd.offsetWidth-4,ox+e.clientX-sx));
-    var y=Math.max(4,Math.min(innerHeight-bd.offsetHeight-4,oy+e.clientY-sy));
-    bd.style.left=x+'px'; bd.style.top=y+'px'; bd.style.right='auto'; bd.style.bottom='auto'; });
-  bd.addEventListener('pointerup',function(){ drag=false; try{ localStorage.setItem('ovi-badge',JSON.stringify({x:parseInt(bd.style.left),y:parseInt(bd.style.top)})); }catch(e){} });
-
-  // PWA: offline + installable (works on GitHub Pages)
-  if('serviceWorker' in navigator && location.protocol==='https:'){
-    try{ navigator.serviceWorker.register('sw.js').catch(function(){}); }catch(e){}
-  }
+  var imgs=document.querySelectorAll('#rooms img'),i=0;
+  if(imgs.length>1){setInterval(function(){imgs[i].classList.remove('on');i=(i+1)%imgs.length;imgs[i].classList.add('on')},3500)}
+  var bd=document.getElementById('badge'),sx,sy,ox,oy,drag=false;
+  bd.addEventListener('pointerdown',function(e){drag=true;bd.setPointerCapture(e.pointerId);var r=bd.getBoundingClientRect();sx=e.clientX;sy=e.clientY;ox=r.left;oy=r.top;bd.style.cursor='grabbing'});
+  bd.addEventListener('pointermove',function(e){if(!drag)return;bd.style.left=(ox+e.clientX-sx)+'px';bd.style.top=(oy+e.clientY-sy)+'px';bd.style.right='auto';bd.style.bottom='auto'});
+  bd.addEventListener('pointerup',function(){drag=false;bd.style.cursor='grab'});
+  if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(function(){})}
 })();
 </script>
 </body>
