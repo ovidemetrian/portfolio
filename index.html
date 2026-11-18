@@ -96,13 +96,15 @@ svg{flex:none}.tools button svg{width:2.4cqw;height:2.4cqw;fill:currentColor}
 .ll{font:700 1.99cqw/1 var(--mono);color:var(--dim)}
 .lf{flex:1;font:500 2.1cqw/1 var(--mono);color:#9fe3a8;background:#05070d;border:1px solid #2a3150;border-radius:.4cqw;padding:.8cqw 1.1cqw;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .throb{position:absolute;right:1.2cqw;top:5.4cqw;width:9.6cqw;height:9.6cqw;display:block}
-.throb{background:#000080;overflow:hidden;display:flex;align-items:center;justify-content:center;text-decoration:none;
-  border-top:.45cqw solid #404040;border-left:.45cqw solid #404040;border-bottom:.45cqw solid #dfdfdf;border-right:.45cqw solid #dfdfdf}
-.throb .N{position:relative;z-index:2;color:#fff;font:700 6.2cqw/1 'Times New Roman',Times,serif}
-.throb .star{position:absolute;width:.7cqw;height:.7cqw;background:#fff;border-radius:50%;opacity:0;z-index:1}
-.throb .star:nth-child(1){left:1.4cqw}.throb .star:nth-child(2){left:3.8cqw;animation-delay:.33s!important}.throb .star:nth-child(3){left:6.6cqw;animation-delay:.66s!important}
-.throb.busy .star{animation:shoot 1s linear 2}
-@keyframes shoot{0%{top:9cqw;opacity:0}15%{opacity:1}85%{opacity:1}100%{top:-1cqw;opacity:0}}
+.throb{overflow:hidden;display:block;text-decoration:none;background:linear-gradient(180deg,#000020 0%,#000060 55%,#0000a0 100%);
+  border-top:.3cqw solid #dfdfdf;border-left:.3cqw solid #dfdfdf;border-bottom:.3cqw solid #404040;border-right:.3cqw solid #404040}
+.throb .N{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);z-index:3;color:#fff;font:700 5.9cqw/1 'Times New Roman',Times,serif;text-shadow:.2cqw .2cqw 0 #000040}
+.throb .hz{position:absolute;left:-30%;right:-30%;bottom:-4.6cqw;height:7cqw;border-radius:50%;z-index:2;background:radial-gradient(ellipse at 50% 0%,#40c040 0%,#008000 60%,#004000 100%)}
+.throb .met{position:absolute;width:1.4cqw;height:.2cqw;background:linear-gradient(90deg,#fff,transparent);opacity:0;z-index:1;transform:rotate(-35deg);animation:meteor 2.4s linear infinite}
+.throb .met:nth-child(1){top:1.2cqw;left:70%}.throb .met:nth-child(2){top:2.6cqw;left:85%;animation-delay:.8s}.throb .met:nth-child(3){top:.6cqw;left:50%;animation-delay:1.6s}
+@keyframes meteor{0%{opacity:0;transform:rotate(-35deg) translateX(0)}10%{opacity:1}70%{opacity:1}100%{opacity:0;transform:rotate(-35deg) translateX(-7cqw)}}
+.throb.busy .N{animation:spinN 1.2s ease-in-out}
+@keyframes spinN{to{transform:translate(-50%,-50%) rotateY(360deg)}}
 .spin{transform-box:fill-box;transform-origin:center}
 @keyframes spinY{to{transform:rotateY(360deg)}}
 .melt{display:inline-grid;justify-items:center}
@@ -281,7 +283,7 @@ body:not(.js) #about .x{display:none}
     </nav>
     <div class="loc"><span class="ll">Location:</span><span class="lf" id="loc">portfoloid://ovi/</span><b class="count" id="count">01 / 15</b></div>
     <a class="throb" id="throb" href="#map" data-go="map" aria-label="NoEscape Navigator: open the map">
-      <span class="star"></span><span class="star"></span><span class="star"></span><span class="N">N</span>
+      <span class="met"></span><span class="met"></span><span class="met"></span><span class="N">N</span><span class="hz"></span>
     </a>
   </header>
 
