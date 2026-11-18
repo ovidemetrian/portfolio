@@ -40,13 +40,12 @@ a{color:#9cc3ff;text-underline-offset:.4cqw}
 .tri{background:linear-gradient(90deg,var(--red),var(--yellow),var(--blue));-webkit-background-clip:text;background-clip:text;color:transparent}
 
 /* ===== the common background: warm-to-cool field, slow rays behind ===== */
-#field{position:fixed;inset:-12%;z-index:0;pointer-events:none;filter:blur(7vmin) saturate(1.25);
-  background:radial-gradient(48% 52% at 18% 22%,var(--orange),transparent 70%),
-             radial-gradient(42% 46% at 38% 70%,var(--red),transparent 72%),
-             radial-gradient(55% 60% at 84% 76%,var(--blue),transparent 72%),
-             radial-gradient(40% 40% at 78% 18%,#5b3cff,transparent 70%),#0b0f24;
+#field{position:fixed;inset:-12%;z-index:0;pointer-events:none;filter:blur(7vmin);
+  background:radial-gradient(60% 80% at 8% 50%,#EA580C,transparent 75%),
+             radial-gradient(60% 80% at 92% 50%,#0F172A,transparent 75%),
+             linear-gradient(90deg,#EA580C 0%,#c2410c 28%,#4a2a2a 50%,#1a2238 70%,#0F172A 100%);
   animation:drift 40s ease-in-out infinite alternate}
-@keyframes drift{to{transform:translate(2%,-2%) scale(1.05)}}
+@keyframes drift{to{transform:translateX(2%) scale(1.04)}}
 #rays{position:fixed;left:50%;top:50%;width:220vmax;height:220vmax;margin:-110vmax 0 0 -110vmax;z-index:0;pointer-events:none;mix-blend-mode:screen;opacity:.5;
   background:repeating-conic-gradient(rgba(255,240,220,.16) 0 3deg,transparent 3deg 12deg);
   -webkit-mask:radial-gradient(closest-side,#000,transparent 75%);mask:radial-gradient(closest-side,#000,transparent 75%);
@@ -60,12 +59,15 @@ a{color:#9cc3ff;text-underline-offset:.4cqw}
 
 /* top bar: the NoEscape Navigator */
 .top{position:absolute;left:0;right:0;top:0;height:15cqw;z-index:5;background:#000;border-bottom:.25cqw solid #1d2338}
-.tbar{height:4.4cqw;display:flex;align-items:center;justify-content:space-between;padding:0 1.8cqw;background:linear-gradient(90deg,#0b1240,#000 70%);border-bottom:1px solid #1d2338}
+.tbar{height:4.4cqw;display:flex;align-items:center;justify-content:flex-start;padding:0 1.8cqw;background:linear-gradient(90deg,#0b1240,#000 70%);border-bottom:1px solid #1d2338}
 .wt{font:700 2.1cqw/1 var(--mono);letter-spacing:.05em;color:#dfe3f0;white-space:nowrap}
 .wt .sep{color:var(--yellow)}
 .tools{height:5.8cqw;display:flex;align-items:center;gap:.7cqw;padding:0 12.4cqw 0 1.8cqw;border-bottom:1px solid #1d2338}
 .tools button{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.4cqw;height:4.8cqw;font:700 1.9cqw/1 var(--mono);letter-spacing:.03em;color:#e9ecf5;background:#000;border:1px solid #2a3150;border-radius:.5cqw;cursor:pointer;padding:0}
-.tools button i{font-style:normal;font-size:2.3cqw;color:var(--yellow)}
+.tools button i{font-style:normal;display:block;line-height:0;color:var(--yellow)}
+svg{flex:none}.tools button svg{width:2.4cqw;height:2.4cqw;fill:currentColor}
+.st{fill:none!important;stroke:currentColor;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.bot button{display:flex;align-items:center;gap:1cqw}.bot button svg:not(.shape){display:none;width:2.2cqw;height:2.2cqw;fill:currentColor;filter:drop-shadow(0 0 .6cqw #fff)}
 .tools button:nth-child(2) i{color:var(--blue)}.tools button:nth-child(3) i{color:var(--red)}
 .tools button:hover{border-color:var(--yellow)}
 .tools button:disabled{opacity:.35;cursor:default}
@@ -82,21 +84,30 @@ a{color:#9cc3ff;text-underline-offset:.4cqw}
 .melt .b{opacity:0}
 .melted .melt .a{opacity:0}.melted .melt .b{opacity:1}
 .count{font:700 2.3cqw/1 var(--mono);color:var(--yellow);letter-spacing:.08em;white-space:nowrap}
-#badge{font:700 1.5cqw/1 var(--mono);letter-spacing:.2em;color:var(--deep);padding:.8cqw 1.4cqw;border-radius:99cqw;white-space:nowrap;
-  background:linear-gradient(90deg,var(--red),var(--yellow),var(--blue));box-shadow:0 0 1.6cqw rgba(255,210,63,.7);animation:glow 2.8s ease-in-out infinite;cursor:pointer;touch-action:none;user-select:none;position:relative;z-index:8}
-@keyframes glow{50%{box-shadow:0 0 2.8cqw rgba(47,123,255,.9)}}
+#badge{flex:none;width:auto;padding:0 2.2cqw;height:6.4cqw;display:grid;place-items:center;text-align:center;white-space:nowrap;font:800 2.8cqw/1 var(--mono);letter-spacing:.12em;color:#fff;
+  border-radius:0;cursor:pointer;touch-action:none;user-select:none;position:relative;z-index:8;animation:glow 3s ease-in-out infinite}
+/* glass buttons: semi-transparent white, glowing text */
+.bot .tag,#badge{background:linear-gradient(180deg,rgba(255,255,255,.30),rgba(255,255,255,.10));border:1px solid rgba(255,255,255,.55);
+  box-shadow:inset 0 .5cqw .8cqw rgba(255,255,255,.35),inset 0 -.4cqw .8cqw rgba(0,0,0,.18),0 0 2cqw rgba(255,255,255,.18);
+  -webkit-backdrop-filter:blur(1.6cqw);backdrop-filter:blur(1.6cqw);
+  color:#fff;text-shadow:0 0 .6cqw #fff,0 0 1.6cqw rgba(160,200,255,.95),0 0 3cqw rgba(47,123,255,.7)}
+@keyframes glow{50%{box-shadow:inset 0 .5cqw .8cqw rgba(255,255,255,.35),inset 0 -.4cqw .8cqw rgba(0,0,0,.18),0 0 3.4cqw rgba(255,255,255,.45)}}
 
 /* bottom bar: next page, next page */
-.bot{position:absolute;left:0;right:0;bottom:0;height:8cqw;z-index:5;display:flex;align-items:center;justify-content:space-between;padding:0 3cqw}
-.bot button{font:800 2cqw/1 var(--mono);letter-spacing:.12em;color:var(--ink);background:var(--glass);border:1px solid var(--line);border-radius:99cqw;padding:1.6cqw 3cqw;cursor:pointer}
-.bot button.next{color:var(--deep);border:0;background:linear-gradient(90deg,var(--red),var(--yellow),var(--blue))}
+.bot{position:absolute;left:0;right:0;bottom:0;height:11cqw;z-index:5;display:flex;align-items:center;justify-content:center;gap:1.5cqw;padding:0 2.4cqw}
+.bot button{position:relative;isolation:isolate;width:15cqw;height:6.4cqw;justify-content:center;font:800 2.8cqw/1 var(--mono);letter-spacing:.06em;padding:0;cursor:pointer;
+  background:none;border:0;color:#fff;text-shadow:0 0 .6cqw #fff,0 0 1.6cqw rgba(160,200,255,.95),0 0 3cqw rgba(47,123,255,.7)}
+.bot button .shape{position:absolute;inset:0;width:100%;height:100%;z-index:-1;overflow:visible;filter:drop-shadow(0 0 1.2cqw rgba(255,255,255,.35))}
+.bot button .shape path{fill:url(#glassfill);stroke:rgba(255,255,255,.7);stroke-width:1.2;vector-effect:non-scaling-stroke}
+#bnext{padding-right:1.6cqw}#bprev{padding-left:1.6cqw}
+.bot button:not(:disabled):hover .shape{filter:drop-shadow(0 0 2cqw rgba(255,255,255,.6))}
 .bot button:disabled{opacity:.25;cursor:default}
 .dots{display:flex;gap:.9cqw}
 .dots i{width:1cqw;height:1cqw;border-radius:50%;background:var(--line)}
 .dots i.on{background:var(--yellow);box-shadow:0 0 1cqw var(--yellow)}
 
 /* pages */
-.page{position:absolute;inset:0;padding:17cqw 5cqw 9.5cqw;display:flex;flex-direction:column;justify-content:center;font-size:3.4cqw;line-height:1.4}
+.page{position:absolute;inset:0;padding:17cqw 5cqw 12cqw;display:flex;flex-direction:column;justify-content:center;font-size:3.4cqw;line-height:1.4}
 .js .page{opacity:0;visibility:hidden;transition:opacity .5s ease,transform .5s ease,visibility 0s .5s}
 .js .page.on{opacity:1;visibility:visible;transform:none;transition:opacity .5s ease,transform .5s ease}
 .js .page.from-right{transform:translateX(6cqw)}.js .page.from-left{transform:translateX(-6cqw)}
@@ -234,10 +245,9 @@ body:not(.js) #about .x{display:none}
   <header class="top">
     <div class="tbar">
       <span class="wt">N<span class="melt"><span class="a">et</span><span class="b">oE</span></span>scape Navigator <span class="sep">—</span> PORTFOLOID</span>
-      <div id="badge" role="button" tabindex="0" aria-label="MADE BY OVI: what this is and how it was made">MADE BY OVI</div>
     </div>
     <nav class="tools" aria-label="Navigation">
-      <button id="prev"><i>◀</i>Back</button><button id="next"><i>▶</i>Forward</button><button id="reload"><i>↻</i>Reload</button><button data-go="porthole"><i>⌂</i>Home</button><button data-go="map"><i>✦</i>Map</button>
+      <button id="prev"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17 4 6 12l11 8z"/></svg></i>Back</button><button id="next"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4l11 8-11 8z"/></svg></i>Forward</button><button id="reload"><i><svg viewBox="0 0 24 24" aria-hidden="true" class="st"><path d="M19 12a7 7 0 1 1-2.1-5"/><path d="M19 3.5V9h-5.5"/></svg></i>Reload</button><button data-go="porthole"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5V21h-6v-6H9v6H3z"/></svg></i>Home</button><button data-go="map"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.6 7.4L22 12l-7.4 2.6L12 22l-2.6-7.4L2 12l7.4-2.6z"/></svg></i>Map</button>
     </nav>
     <div class="loc"><span class="ll">Location:</span><span class="lf" id="loc">portfoloid://ovi/</span><b class="count" id="count">01 / 15</b></div>
     <a class="throb" id="throb" href="#map" data-go="map" aria-label="NoEscape Navigator: open the map">
@@ -516,10 +526,10 @@ A corporate presentation room at a company headquarters in Phoenix, designed, bu
     <p class="credit">Concept &amp; design: Ovi Demetrian · built with Claude<br>PORTFOLOID · sealed November 2026</p>
   </section>
 
-  <footer class="bot">
-    <button id="bprev">◀ BACK</button>
-    <div class="dots" id="dots"></div>
-    <button class="next" id="bnext">NEXT ▶</button>
+  <footer class="bot"><svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><linearGradient id="glassfill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".34"/><stop offset=".5" stop-color="#fff" stop-opacity=".14"/><stop offset="1" stop-color="#fff" stop-opacity=".08"/></linearGradient></defs></svg>
+    <button id="bprev"><svg class="shape" viewBox="0 0 250 90" preserveAspectRatio="none" aria-hidden="true"><path d="M249 1H38L1 45L38 89H249Z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17 4 6 12l11 8z"/></svg>BACK</button>
+    <div id="badge" role="button" tabindex="0" aria-label="MADE BY OVI: what this is and how it was made">MADE BY OVI</div>
+    <button class="next" id="bnext"><svg class="shape" viewBox="0 0 250 90" preserveAspectRatio="none" aria-hidden="true"><path d="M1 1H212L249 45L212 89H1Z"/></svg>NEXT<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4l11 8-11 8z"/></svg></button>
   </footer>
 
   <!-- THE BADGE'S INFO PAGE -->
@@ -545,8 +555,7 @@ A corporate presentation room at a company headquarters in Phoenix, designed, bu
   var pages=[].slice.call(document.querySelectorAll('.page')),cur=-1,last=pages.length-1;
   var ids=pages.map(function(p){return p.id});
   var count=document.getElementById('count'),loc=document.getElementById('loc'),throb=document.getElementById('throb');
-  var dots=document.getElementById('dots');
-  pages.forEach(function(p,k){dots.appendChild(document.createElement('i'));if(['porthole','portal','stickers','brief','end'].indexOf(p.id)>-1)return;var d=document.createElement('div');d.className='bignum';d.textContent=String(k+1).padStart(2,'0');p.insertBefore(d,p.firstChild)});
+  pages.forEach(function(p,k){if(['porthole','portal','stickers','brief','end'].indexOf(p.id)>-1)return;var d=document.createElement('div');d.className='bignum';d.textContent=String(k+1).padStart(2,'0');p.insertBefore(d,p.firstChild)});
 
   function show(n,how){
     if(n<0||n>last||n===cur)return;
@@ -561,9 +570,8 @@ A corporate presentation room at a company headquarters in Phoenix, designed, bu
     loc.textContent='portfoloid://ovi/'+String(n+1).padStart(2,'0')+'-'+ids[n];
     throb.classList.remove('busy');void throb.offsetWidth;throb.classList.add('busy');
     count.textContent=String(n+1).padStart(2,'0')+' / '+String(pages.length).padStart(2,'0');
-    [].forEach.call(dots.children,function(d,k){d.classList.toggle('on',k===n)});
     document.getElementById('prev').disabled=document.getElementById('bprev').disabled=n===0;
-    document.getElementById('bnext').textContent=n===last?'ABOARD ▶':'NEXT ▶';
+    document.getElementById('bnext').innerHTML='<svg class="shape" viewBox="0 0 250 90" preserveAspectRatio="none" aria-hidden="true"><path d="M1 1H212L249 45L212 89H1Z"/></svg>'+(n===last?'ABOARD':'NEXT')+'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4l11 8-11 8z"/></svg>';
     if(location.hash!=='#'+ids[n])history.replaceState(null,'','#'+ids[n]);
   }
   function go(id,how){var n=ids.indexOf(id);if(n>-1)show(n,how)}
@@ -628,7 +636,7 @@ A corporate presentation room at a company headquarters in Phoenix, designed, bu
   var top=document.querySelector('.top');setInterval(function(){top.classList.toggle('melted')},3800);
 
   // installable when served from the web; quiet when opened as an email attachment
-  if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol)){navigator.serviceWorker.register('sw.js').catch(function(){})}
+  if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol)){try{navigator.serviceWorker.register('sw.js').catch(function(){})}catch(e){}}
 })();
 </script>
 </body>
