@@ -1,13 +1,13 @@
 {
-  "name": "Ovi Demetrian — Portfolio",
-  "short_name": "Ovi",
-  "description": "AV systems, interfaces and live shows. Concepts by Ovi, programmed with Claude.",
+  "name": "PORTFOLOID · Ovi Demetrian",
+  "short_name": "PORTFOLOID",
+  "description": "Ovi Demetrian's portfolio, one square page at a time. Concepts by Ovi, programmed with Claude.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "orientation": "portrait",
-  "background_color": "#0F1219",
-  "theme_color": "#1F5FD6",
+  "orientation": "any",
+  "background_color": "#04060f",
+  "theme_color": "#04060f",
   "icons": [
     {"src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable"},
     {"src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable"}
