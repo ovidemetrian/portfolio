@@ -583,6 +583,7 @@ A corporate presentation room at a company headquarters in Phoenix, designed, bu
       <li><b>Plan B:</b> with scripts off, every page still shows, stacked, and every link still works.</li>
       <li><b>Install it:</b> open ovidemetrian.github.io/portfolio and add it to your home screen.</li>
     </ul>
+    <p class="small" style="margin:0 0 2.4cqw">PORTFOLOID v17 · 19 November 2026</p>
     <button class="x" id="aboutX">CLOSE ✕</button>
   </section>
 
@@ -651,7 +652,8 @@ A corporate presentation room at a company headquarters in Phoenix, designed, bu
   bd.addEventListener('pointerdown',function(e){drag=true;moved=false;bd.setPointerCapture(e.pointerId);bx=e.clientX;by=e.clientY;bd.classList.add('dragging');e.stopPropagation()});
   bd.addEventListener('pointermove',function(e){if(!drag)return;var dx=e.clientX-bx,dy=e.clientY-by;if(Math.abs(dx)+Math.abs(dy)>6)moved=true;if(!moved)return;bd.style.transform='translate('+dx+'px,'+dy+'px)'});
   function letgo(){if(!drag)return;drag=false;bd.classList.remove('dragging');bd.style.transform=''}
-  bd.addEventListener('pointerup',function(){var tap=drag&&!moved;letgo();if(tap)openAbout()});
+  bd.addEventListener('pointerup',letgo);
+  bd.addEventListener('click',function(e){e.stopPropagation();if(moved){moved=false;return}openAbout()});
   bd.addEventListener('pointercancel',letgo);
   bd.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();e.stopPropagation();openAbout()}});
 
