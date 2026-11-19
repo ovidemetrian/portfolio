@@ -611,14 +611,15 @@ A corporate presentation room at a company headquarters in Phoenix, designed, bu
     loc.textContent='portfoloid://ovi/'+String(n+1).padStart(2,'0')+'-'+ids[n];
     throb.classList.remove('busy');void throb.offsetWidth;throb.classList.add('busy');
     count.textContent=String(n+1).padStart(2,'0')+' / '+String(pages.length).padStart(2,'0');
-    document.getElementById('prev').disabled=document.getElementById('bprev').disabled=n===0;
+    
     document.getElementById('bnext').innerHTML='<svg class="shape" viewBox="0 0 250 90" preserveAspectRatio="none" aria-hidden="true"><path d="M1 1H212L249 45L212 89H1Z"/></svg>'+(n===last?'ABOARD':'NEXT')+'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4l11 8-11 8z"/></svg>';
     if(location.hash!=='#'+ids[n])history.replaceState(null,'','#'+ids[n]);
   }
   function go(id,how){var n=ids.indexOf(id);if(n>-1)show(n,how)}
   // one rule everywhere: forward from the last page goes back aboard
   function fwd(){show(cur===last?0:cur+1)}
-  function back(){show(cur-1)}
+  // and back from the first page goes round to the last: a Möbius loop both ways
+  function back(){show(cur===0?last:cur-1)}
 
   document.getElementById('next').onclick=fwd;document.getElementById('bnext').onclick=fwd;
   document.getElementById('prev').onclick=back;document.getElementById('bprev').onclick=back;
