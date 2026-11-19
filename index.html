@@ -83,15 +83,31 @@ a{color:#9cc3ff;text-underline-offset:.4cqw}
 #stage.shake{animation:shake .35s ease}
 @keyframes shake{25%{transform:translateX(-1cqw)}50%{transform:translateX(1cqw)}75%{transform:translateX(-.5cqw)}}
 .wt .sep{color:var(--yellow)}
-.tools{height:5.8cqw;display:flex;align-items:center;gap:.7cqw;padding:0 12.4cqw 0 1.8cqw;border-bottom:1px solid #1d2338}
-.tools button{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.4cqw;height:4.8cqw;font:700 1.99cqw/1 var(--mono);letter-spacing:.03em;color:#e9ecf5;background:#000;border:1px solid #2a3150;border-radius:.5cqw;cursor:pointer;padding:0}
-.tools button i{font-style:normal;display:block;line-height:0;color:var(--yellow)}
-svg{flex:none}.tools button svg{width:2.4cqw;height:2.4cqw;fill:currentColor}
-.st{fill:none!important;stroke:currentColor;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
-.bot button{display:flex;align-items:center;gap:1cqw}.bot button svg:not(.shape){display:none;width:2.2cqw;height:2.2cqw;fill:currentColor;filter:drop-shadow(0 0 .6cqw #fff)}
-.tools button:nth-child(2) i{color:var(--blue)}.tools button:nth-child(3) i{color:var(--red)}
-.tools button:hover{border-color:var(--yellow)}
-.tools button:disabled{opacity:.35;cursor:default}
+.tools{height:5.8cqw;display:flex;align-items:center;gap:1.5cqw;padding:0 12.6cqw 0 2cqw;border-bottom:1px solid #1d2338}
+svg{flex:none}
+/* toolbar: the same glass tags as the bottom bar, floating */
+.tools button{flex:1;position:relative;isolation:isolate;display:flex;align-items:center;justify-content:center;height:4.1cqw;padding:0;border:0;background:none;cursor:pointer;
+  font:800 2.1cqw/1 var(--mono);letter-spacing:.05em;color:#fff;text-shadow:0 0 .5cqw #fff,0 0 1.3cqw rgba(160,200,255,.9),0 0 2.4cqw rgba(47,123,255,.6);
+  animation:float 7s ease-in-out infinite}
+.tools button.tl{padding-left:1.2cqw}.tools button.tr{padding-right:1.2cqw}
+.tools button:nth-child(2){animation-duration:8.3s;animation-delay:-2s}.tools button:nth-child(3){animation-duration:6.6s;animation-delay:-4s}
+.tools button:nth-child(4){animation-duration:7.7s;animation-delay:-1s}.tools button:nth-child(5){animation-duration:9s;animation-delay:-3s}
+@keyframes float{0%,100%{translate:-.45cqw 0}50%{translate:.45cqw 0}}
+.bot button{display:flex;align-items:center;justify-content:center;gap:1cqw}
+.bot button svg:not(.shape){display:none}
+/* rows: glass tags pointing right, swaying like the badge */
+.js .rows a{background:none;border:0;-webkit-backdrop-filter:none;backdrop-filter:none;position:relative;isolation:isolate;padding-right:5cqw;color:#fff;
+  text-shadow:0 0 .5cqw rgba(255,255,255,.7),0 0 1.4cqw rgba(160,200,255,.6);animation:sway 9s ease-in-out infinite}
+.js .rows a::after{content:none}
+.js .rows li{gap:2.8cqw}
+.js .rows li:nth-child(2) a{animation-delay:-2.2s}.js .rows li:nth-child(3) a{animation-delay:-4.5s}.js .rows li:nth-child(4) a{animation-delay:-6.7s}
+.rows a .shape{position:absolute;inset:0;width:100%;height:100%;z-index:-1;overflow:visible;filter:drop-shadow(0 0 1cqw rgba(255,255,255,.25))}
+.rows a .shape path{fill:url(#glassfill);stroke:rgba(255,255,255,.7);stroke-width:1.2;vector-effect:non-scaling-stroke}
+.rows a:hover .shape{filter:drop-shadow(0 0 1.8cqw rgba(255,255,255,.55))}
+.tools button .shape,.bot button .shape{position:absolute;inset:0;width:100%;height:100%;z-index:-1;overflow:visible;filter:drop-shadow(0 0 1cqw rgba(255,255,255,.3))}
+.tools button .shape path{fill:url(#glassfill);stroke:rgba(255,255,255,.7);stroke-width:1.2;vector-effect:non-scaling-stroke}
+.tools button:not(:disabled):hover .shape{filter:drop-shadow(0 0 1.8cqw rgba(255,255,255,.6))}
+.tools button:disabled{opacity:.3;cursor:default}
 .loc{height:4.8cqw;display:flex;align-items:center;gap:1.2cqw;padding:0 12.4cqw 0 1.8cqw}
 .ll{font:700 1.99cqw/1 var(--mono);color:var(--dim)}
 .lf{flex:1;font:500 2.1cqw/1 var(--mono);color:#9fe3a8;background:#05070d;border:1px solid #2a3150;border-radius:.4cqw;padding:.8cqw 1.1cqw;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -125,11 +141,11 @@ svg{flex:none}.tools button svg{width:2.4cqw;height:2.4cqw;fill:currentColor}
 
 /* bottom bar: next page, next page */
 .bot{position:absolute;left:0;right:0;bottom:0;height:11cqw;z-index:5;display:flex;align-items:center;justify-content:center;gap:2.6cqw;padding:0 2.4cqw}
-.bot button{position:relative;isolation:isolate;width:15cqw;height:6.4cqw;justify-content:center;font:800 2.94cqw/1 var(--mono);letter-spacing:.06em;padding:0;cursor:pointer;
+.bot button{animation:float 8s ease-in-out infinite;position:relative;isolation:isolate;width:15cqw;height:6.4cqw;justify-content:center;font:800 2.94cqw/1 var(--mono);letter-spacing:.06em;padding:0;cursor:pointer;
   background:none;border:0;color:#fff;text-shadow:0 0 .6cqw #fff,0 0 1.6cqw rgba(160,200,255,.95),0 0 3cqw rgba(47,123,255,.7)}
 .bot button .shape{position:absolute;inset:0;width:100%;height:100%;z-index:-1;overflow:visible;filter:drop-shadow(0 0 1.2cqw rgba(255,255,255,.35))}
 .bot button .shape path{fill:url(#glassfill);stroke:rgba(255,255,255,.7);stroke-width:1.2;vector-effect:non-scaling-stroke}
-#bnext{padding-right:1.6cqw}#bprev{padding-left:1.6cqw}
+#bnext{padding-right:1.6cqw;animation-delay:-3s!important}#bprev{padding-left:1.6cqw}
 .bot button:not(:disabled):hover .shape{filter:drop-shadow(0 0 2cqw rgba(255,255,255,.6))}
 .bot button:disabled{opacity:.25;cursor:default}
 .dots{display:flex;gap:.9cqw}
@@ -279,7 +295,7 @@ body:not(.js) #about .x{display:none}
       <span class="wbtns"><button class="wb" data-w="min" aria-label="Minimize"><svg viewBox="0 0 12 12"><path d="M2 9.5h6.5" /></svg></button><button class="wb" data-w="max" aria-label="Maximize"><svg viewBox="0 0 12 12"><path d="M2 2.5h8v7.5H2z M2 3.5h8" /></svg></button><button class="wb wx" data-w="close" aria-label="Close"><svg viewBox="0 0 12 12"><path d="M2.5 2.5l7 7M9.5 2.5l-7 7" /></svg></button></span>
     </div>
     <nav class="tools" aria-label="Navigation">
-      <button id="prev"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17 4 6 12l11 8z"/></svg></i>Back</button><button id="next"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4l11 8-11 8z"/></svg></i>Forward</button><button id="reload"><i><svg viewBox="0 0 24 24" aria-hidden="true" class="st"><path d="M19 12a7 7 0 1 1-2.1-5"/><path d="M19 3.5V9h-5.5"/></svg></i>Reload</button><button data-go="porthole"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5V21h-6v-6H9v6H3z"/></svg></i>Home</button><button data-go="map"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.6 7.4L22 12l-7.4 2.6L12 22l-2.6-7.4L2 12l7.4-2.6z"/></svg></i>Map</button>
+      <button id="prev" class="tl"><svg class="shape" viewBox="0 0 160 46" preserveAspectRatio="none" aria-hidden="true"><path d="M159 1H20L1 23L20 45H159Z"/></svg>Back</button><button id="next" class="tr"><svg class="shape" viewBox="0 0 160 46" preserveAspectRatio="none" aria-hidden="true"><path d="M1 1H140L159 23L140 45H1Z"/></svg>Forward</button><button id="reload"><svg class="shape" viewBox="0 0 160 46" preserveAspectRatio="none" aria-hidden="true"><path d="M1 1H159V45H1Z"/></svg>Reload</button><button data-go="porthole"><svg class="shape" viewBox="0 0 160 46" preserveAspectRatio="none" aria-hidden="true"><path d="M1 1H159V45H1Z"/></svg>Home</button><button data-go="map"><svg class="shape" viewBox="0 0 160 46" preserveAspectRatio="none" aria-hidden="true"><path d="M1 1H159V45H1Z"/></svg>Map</button>
     </nav>
     <div class="loc"><span class="ll">Location:</span><span class="lf" id="loc">portfoloid://ovi/</span><b class="count" id="count">01 / 15</b></div>
     <a class="throb" id="throb" href="#map" data-go="map" aria-label="NoEscape Navigator: open the map">
@@ -575,6 +591,7 @@ A corporate presentation room at a company headquarters in Phoenix, designed, bu
 <script>
 (function(){
   document.body.classList.add('js');
+  document.querySelectorAll('.rows a').forEach(function(a){a.insertAdjacentHTML('afterbegin','<svg class="shape" viewBox="0 0 880 70" preserveAspectRatio="none" aria-hidden="true"><path d="M1 1H842L879 35L842 69H1Z"/></svg>')});
   document.querySelectorAll('a[href^="http"]').forEach(function(a){a.target='_blank';a.rel='noopener'});
   var pages=[].slice.call(document.querySelectorAll('.page')),cur=-1,last=pages.length-1;
   var ids=pages.map(function(p){return p.id});
