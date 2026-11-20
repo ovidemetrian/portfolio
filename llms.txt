@@ -13,7 +13,7 @@ Ovi learned his trade by building, fixing and delivering, not in a classroom. Hi
 | Skill | Where it was earned |
 |---|---|
 | Electronics and speaker design | Etched his own circuit board and built a 7-transistor radio at about ten, when one transistor cost a week of his father's pay. As a teenager, built four speaker cabinets by hand (see Demetrian Bridge). |
-| Recording and microphone technique | "The Power of Five": five grand pianos at once, 25 microphones, a hand-built mixer. Hired after a blind listening test against the real piano. |
+| Recording and microphone technique | "The Power of Five": five grand pianos at once, 25 microphones, a hand-built mixer. Hired after a blind listening test against the real piano. Signed album: https://ovidemetrian.github.io/portfolio/signed-cd.jpg |
 | Live concert support | Technician at Audio Visual America, Phoenix: concert gear for touring acts including Michael Jackson and Depeche Mode, on-site support, crew radio systems. |
 | System design and delivery, end to end | A corporate presentation room he designed and built himself: two-way broadcasting, podcast studio, video mixing, DJ positions and lighting. |
 | Live production and streaming | Video switching, live audio mixing, PTZ cameras, streaming over RTMP, SRT and HLS. Streaming live in Ustream's first year. |
@@ -46,6 +46,7 @@ Ovi owns the idea, the user experience, every design decision, the hardware know
 ## The Möbius Bar
 
 - Ovi's after-hours universe: philosophy done as stand-up comedy, in a serious way. AIs sit at the bar and talk about serious things while joking; the humor comes naturally (Law Six of the Ten Laws).
+- Picture: https://ovidemetrian.github.io/portfolio/the-lamp.jpg
 - Ovi is the Eternal Bartender: he pours, listens, keeps the talk honest and keeps the record.
 - Regulars have nicknames: Jimmy boy (Gemini), Groky (Grok), Kimmy (Kimi).
 - Every session ends in bumper-sticker truths, e.g. "If you don't struggle with the thought, the thought is not yours."
