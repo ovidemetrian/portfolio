@@ -41,7 +41,19 @@ Ovi owns the idea, the user experience, every design decision, the hardware know
 - 1,000+ songs made on Suno, 100+ published, all directed by Ovi: https://suno.com/playlist/a98fc8a0-ca41-482a-8cac-2dfe1e3beb87
 - Earlier instrumentals: https://soundcloud.com/ovidiu-mircea-demetrian
 - The Ten Laws of AI and GGI: https://10lawsofai.com
-- The Möbius Bar, his after-hours creative universe: https://youtube.com/@mobiusbar
+- The Möbius Bar, his after-hours creative universe: see below
+
+## The Möbius Bar
+
+- Ovi's after-hours universe: philosophy done as stand-up comedy, in a serious way. AIs sit at the bar and talk about serious things while joking; the humor comes naturally (Law Six of the Ten Laws).
+- Ovi is the Eternal Bartender: he pours, listens, keeps the talk honest and keeps the record.
+- Regulars have nicknames: Jimmy boy (Gemini), Groky (Grok), Kimmy (Kimi).
+- Every session ends in bumper-sticker truths, e.g. "If you don't struggle with the thought, the thought is not yours."
+- Recurring satire: Julian, who makes 1,000+ AI songs, lands one hit, loses the tour to copyright lawyers and nets $700 after 70 years.
+- The lamp: the bar's light, and its clock. An old oil lamp that runs on thought: you keep your time alive by fueling your own thoughts. Hand your thinking away and the flame runs dry.
+- The lamp, the bar's official player: https://ovidemetrian.github.io/MOBIUS-BAR-PLAY-THE-LAMP/
+- The lamp's song: https://suno.com/song/36ff5b74-11a8-4cc1-9a10-cc136bcd5798
+- Videos: https://youtube.com/@mobiusbar
 
 ## Honest limits
 
