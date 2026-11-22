@@ -35,24 +35,100 @@
 }
 *{box-sizing:border-box}
 html,body{margin:0;height:100%;background:var(--deep);color:var(--ink);font-family:var(--sans)}
-body{display:grid;place-items:start center;overflow:hidden}
+body{display:grid;place-items:center;overflow:hidden}
 a{color:#9cc3ff;text-underline-offset:.4cqw}
 .tri{background:linear-gradient(90deg,var(--red),var(--yellow),var(--blue));-webkit-background-clip:text;background-clip:text;color:transparent}
 
 /* ===== the common background: warm-to-cool field, slow rays behind ===== */
-#field{position:fixed;inset:-12%;z-index:0;pointer-events:none;filter:blur(7vmin);
-  background:radial-gradient(60% 80% at 8% 50%,#EA580C,transparent 75%),
-             radial-gradient(60% 80% at 92% 50%,#0F172A,transparent 75%),
-             linear-gradient(90deg,#EA580C 0%,#c2410c 28%,#4a2a2a 50%,#1a2238 70%,#0F172A 100%);
+#field{position:fixed;inset:-12%;z-index:0;pointer-events:none;filter:saturate(1.45) brightness(1.08) contrast(1.05);
+  background:
+    linear-gradient(90deg,transparent 60%,rgba(2,6,26,.3) 74%,rgba(1,4,18,.7) 88%,rgba(1,3,14,.8) 100%),
+    radial-gradient(18% 18% at 44% 46%,rgba(255,240,210,.9),transparent 70%),
+    radial-gradient(42% 48% at 36% 46%,#F6BA6F 0%,#EA9C45 30%,rgba(196,117,50,.75) 55%,transparent 78%),
+    radial-gradient(26% 70% at 60% 46%,#4FA0D8 0%,#2E72B4 45%,transparent 80%),
+    radial-gradient(40% 55% at 52% 50%,rgba(190,160,150,.45),transparent 80%),
+    linear-gradient(90deg,#120703 0%,#3a1a08 18%,#7a3f18 32%,#7a4a30 40%,#6a5a5e 47%,#4a6488 53%,#3470AE 60%,#1E4F94 68%,#123677 74%,#0A2258 80%,#06143C 85%,#030A24 89%,#020718 100%);
   animation:drift 40s ease-in-out infinite alternate}
+#field::after{content:"";position:absolute;inset:0;background:radial-gradient(75% 75% at 50% 50%,transparent 55%,rgba(5,3,2,.65) 100%)}
+#lava{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;filter:blur(9vmin) saturate(1.3);opacity:.85}
+#lava i{position:absolute;border-radius:50%;mix-blend-mode:screen;will-change:transform}
+#lava i:nth-child(1){width:46vmax;height:46vmax;left:8%;top:30%;background:radial-gradient(circle,#F28A2A 0,rgba(234,120,40,.6) 45%,transparent 70%);animation:lv1 46s ease-in-out infinite alternate}
+#lava i:nth-child(2){width:34vmax;height:40vmax;left:22%;top:-10%;background:radial-gradient(circle,#F6B060 0,rgba(240,150,60,.5) 45%,transparent 70%);animation:lv2 58s ease-in-out infinite alternate}
+#lava i:nth-child(3){width:30vmax;height:36vmax;left:2%;top:62%;background:radial-gradient(circle,#E0661E 0,rgba(210,90,30,.5) 45%,transparent 70%);animation:lv3 52s ease-in-out infinite alternate}
+#lava i:nth-child(4){width:44vmax;height:50vmax;left:50%;top:22%;background:radial-gradient(circle,#3A86D0 0,rgba(40,100,190,.55) 45%,transparent 70%);animation:lv4 50s ease-in-out infinite alternate}
+#lava i:nth-child(5){width:32vmax;height:38vmax;left:56%;top:-8%;background:radial-gradient(circle,#4FA0E0 0,rgba(50,120,210,.45) 45%,transparent 70%);animation:lv5 62s ease-in-out infinite alternate}
+#lava i:nth-child(6){width:34vmax;height:40vmax;left:52%;top:64%;background:radial-gradient(circle,#2A66B8 0,rgba(30,80,170,.5) 45%,transparent 70%);animation:lv6 55s ease-in-out infinite alternate}
+@keyframes lv1{0%{transform:translate(0,0) scale(1)}50%{transform:translate(8vw,-14vh) scale(1.15,.9)}100%{transform:translate(3vw,10vh) scale(.9,1.12)}}
+@keyframes lv2{0%{transform:translate(0,0) scale(1)}50%{transform:translate(-6vw,30vh) scale(.85,1.2)}100%{transform:translate(9vw,52vh) scale(1.1)}}
+@keyframes lv3{0%{transform:translate(0,0) scale(1)}50%{transform:translate(10vw,-34vh) scale(1.2,.9)}100%{transform:translate(4vw,-58vh) scale(.9)}}
+@keyframes lv4{0%{transform:translate(0,0) scale(1)}50%{transform:translate(-9vw,16vh) scale(.9,1.15)}100%{transform:translate(-3vw,-12vh) scale(1.12,.92)}}
+@keyframes lv5{0%{transform:translate(0,0) scale(1)}50%{transform:translate(6vw,34vh) scale(1.15,.85)}100%{transform:translate(-8vw,56vh) scale(.9)}}
+@keyframes lv6{0%{transform:translate(0,0) scale(1)}50%{transform:translate(-10vw,-30vh) scale(.88,1.18)}100%{transform:translate(-2vw,-56vh) scale(1.1)}}
+@media (prefers-reduced-motion:reduce){#lava i{animation:none}}
+#bokeh,#bokeh::before,#bokeh::after{position:fixed;inset:-10% 0;pointer-events:none}
+#bokeh{z-index:0;filter:blur(.2vmin);animation:rise 26s ease-in-out infinite alternate,twinkle 4.2s ease-in-out infinite;
+  background:radial-gradient(circle at 16% 83%,rgba(255,190,100,0.49) 0 1.8vmin,transparent 2.5vmin),
+    radial-gradient(circle at 50% 45%,rgba(255,230,190,0.50) 0 1.6vmin,transparent 2.3vmin),
+    radial-gradient(circle at 12% 6%,rgba(255,190,100,0.55) 0 1.9vmin,transparent 2.6vmin),
+    radial-gradient(circle at 75% 3%,rgba(110,190,255,0.70) 0 1.3vmin,transparent 2.0vmin),
+    radial-gradient(circle at 25% 92%,rgba(255,190,100,0.41) 0 2.0vmin,transparent 2.7vmin),
+    radial-gradient(circle at 5% 54%,rgba(255,190,100,0.53) 0 2.1vmin,transparent 2.8vmin),
+    radial-gradient(circle at 23% 43%,rgba(255,190,100,0.48) 0 0.5vmin,transparent 1.2vmin),
+    radial-gradient(circle at 44% 50%,rgba(255,190,100,0.48) 0 0.9vmin,transparent 1.6vmin),
+    radial-gradient(circle at 24% 46%,rgba(255,190,100,0.41) 0 1.0vmin,transparent 1.7vmin),
+    radial-gradient(circle at 82% 55%,rgba(110,190,255,0.52) 0 1.6vmin,transparent 2.3vmin),
+    radial-gradient(circle at 96% 84%,rgba(110,190,255,0.57) 0 0.7vmin,transparent 1.4vmin),
+    radial-gradient(circle at 71% 70%,rgba(110,190,255,0.60) 0 2.1vmin,transparent 2.8vmin),
+    radial-gradient(circle at 80% 65%,rgba(200,235,255,.95) 0 .25vmin,transparent .7vmin),
+    radial-gradient(circle at 32% 58%,rgba(255,245,225,.95) 0 .25vmin,transparent .7vmin),
+    radial-gradient(circle at 84% 81%,rgba(200,235,255,.95) 0 .25vmin,transparent .7vmin),
+    radial-gradient(circle at 50% 58%,rgba(200,235,255,.95) 0 .25vmin,transparent .7vmin),
+    radial-gradient(circle at 8% 27%,rgba(255,245,225,.95) 0 .25vmin,transparent .7vmin)}
+#bokeh::before{content:"";animation:rise 34s ease-in-out infinite alternate-reverse,twinkle 3.1s ease-in-out infinite 1.2s;
+  background:radial-gradient(circle at 93% 92%,rgba(110,190,255,0.48) 0 0.6vmin,transparent 1.3vmin),
+    radial-gradient(circle at 82% 72%,rgba(110,190,255,0.56) 0 1.6vmin,transparent 2.3vmin),
+    radial-gradient(circle at 60% 60%,rgba(255,230,190,0.34) 0 1.5vmin,transparent 2.2vmin),
+    radial-gradient(circle at 43% 40%,rgba(255,190,100,0.75) 0 1.7vmin,transparent 2.4vmin),
+    radial-gradient(circle at 92% 54%,rgba(110,190,255,0.54) 0 1.3vmin,transparent 2.0vmin),
+    radial-gradient(circle at 6% 6%,rgba(255,190,100,0.51) 0 1.3vmin,transparent 2.0vmin),
+    radial-gradient(circle at 39% 87%,rgba(255,190,100,0.60) 0 1.4vmin,transparent 2.1vmin),
+    radial-gradient(circle at 25% 5%,rgba(255,190,100,0.45) 0 1.1vmin,transparent 1.8vmin),
+    radial-gradient(circle at 51% 97%,rgba(255,230,190,0.35) 0 1.6vmin,transparent 2.3vmin),
+    radial-gradient(circle at 87% 78%,rgba(110,190,255,0.77) 0 1.7vmin,transparent 2.4vmin),
+    radial-gradient(circle at 75% 77%,rgba(110,190,255,0.79) 0 1.1vmin,transparent 1.8vmin),
+    radial-gradient(circle at 93% 18%,rgba(110,190,255,0.70) 0 1.8vmin,transparent 2.5vmin),
+    radial-gradient(circle at 47% 53%,rgba(255,245,225,.95) 0 .25vmin,transparent .7vmin),
+    radial-gradient(circle at 49% 88%,rgba(255,245,225,.95) 0 .25vmin,transparent .7vmin),
+    radial-gradient(circle at 50% 80%,rgba(200,235,255,.95) 0 .25vmin,transparent .7vmin),
+    radial-gradient(circle at 37% 84%,rgba(255,245,225,.95) 0 .25vmin,transparent .7vmin),
+    radial-gradient(circle at 86% 46%,rgba(200,235,255,.95) 0 .25vmin,transparent .7vmin)}
+#bokeh::after{content:"";animation:rise 21s ease-in-out infinite alternate,twinkle 5.3s ease-in-out infinite 2.4s;
+  background:radial-gradient(circle at 25% 54%,rgba(255,190,100,0.61) 0 1.1vmin,transparent 1.8vmin),
+    radial-gradient(circle at 62% 9%,rgba(110,190,255,0.74) 0 0.5vmin,transparent 1.2vmin),
+    radial-gradient(circle at 27% 25%,rgba(255,190,100,0.56) 0 2.2vmin,transparent 2.9vmin),
+    radial-gradient(circle at 82% 48%,rgba(110,190,255,0.50) 0 1.6vmin,transparent 2.3vmin),
+    radial-gradient(circle at 63% 85%,rgba(110,190,255,0.71) 0 1.4vmin,transparent 2.1vmin),
+    radial-gradient(circle at 66% 9%,rgba(110,190,255,0.66) 0 1.8vmin,transparent 2.5vmin),
+    radial-gradient(circle at 31% 6%,rgba(255,190,100,0.57) 0 2.0vmin,transparent 2.7vmin),
+    radial-gradient(circle at 71% 86%,rgba(110,190,255,0.77) 0 1.7vmin,transparent 2.4vmin),
+    radial-gradient(circle at 40% 78%,rgba(255,190,100,0.73) 0 1.3vmin,transparent 2.0vmin),
+    radial-gradient(circle at 86% 12%,rgba(110,190,255,0.53) 0 0.7vmin,transparent 1.4vmin),
+    radial-gradient(circle at 92% 44%,rgba(200,235,255,.95) 0 .25vmin,transparent .7vmin),
+    radial-gradient(circle at 61% 32%,rgba(200,235,255,.95) 0 .25vmin,transparent .7vmin),
+    radial-gradient(circle at 51% 40%,rgba(200,235,255,.95) 0 .25vmin,transparent .7vmin),
+    radial-gradient(circle at 37% 58%,rgba(255,245,225,.95) 0 .25vmin,transparent .7vmin),
+    radial-gradient(circle at 58% 86%,rgba(200,235,255,.95) 0 .25vmin,transparent .7vmin)}
+@keyframes rise{from{transform:translate(0,4vmin)}to{transform:translate(1.5vmin,-6vmin)}}
+@keyframes twinkle{0%,100%{opacity:.45}50%{opacity:1}}
+@media (prefers-reduced-motion:reduce){#bokeh,#bokeh::before,#bokeh::after{animation:none}}
 @keyframes drift{to{transform:translateX(2%) scale(1.04)}}
-#rays{position:fixed;left:50%;top:50%;width:220vmax;height:220vmax;margin:-110vmax 0 0 -110vmax;z-index:0;pointer-events:none;mix-blend-mode:screen;opacity:.5;
+#rays{position:fixed;left:50%;top:50%;width:220vmax;height:220vmax;margin:-110vmax 0 0 -110vmax;z-index:0;pointer-events:none;mix-blend-mode:screen;opacity:.42;
   background:repeating-conic-gradient(rgba(255,240,220,.16) 0 3deg,transparent 3deg 12deg);
   -webkit-mask:radial-gradient(closest-side,#000,transparent 75%);mask:radial-gradient(closest-side,#000,transparent 75%);
   animation:spin 160s linear infinite}
 
 /* ===== THE SQUARE: same shape on every screen ===== */
-#stage{position:relative;z-index:1;width:min(100vw,100dvh);height:min(100vw,100dvh);container-type:size;overflow:hidden;background:rgba(4,6,15,.5);
+#stage{position:relative;z-index:1;width:min(100vw,100dvh);height:min(100vw,100dvh);container-type:size;overflow:hidden;background:rgba(4,6,15,.42);
   box-shadow:0 0 0 1px var(--line),0 0 8vmin rgba(0,0,0,.5)}
 #stage::before{content:"";position:absolute;inset:0;pointer-events:none;
   background:repeating-linear-gradient(0deg,transparent 0 4.9cqw,rgba(255,255,255,.035) 4.9cqw 5cqw),repeating-linear-gradient(90deg,transparent 0 4.9cqw,rgba(255,255,255,.035) 4.9cqw 5cqw)}
@@ -172,6 +248,8 @@ h2{font-size:6.72cqw}
 .copy{flex:none;font:700 2.21cqw/1 var(--mono);color:var(--dim);background:var(--glass);border:1px solid var(--line);border-radius:1.2cqw;padding:1.4cqw 1.4cqw;cursor:pointer}
 .bignum{position:absolute;top:16.6cqw;right:4.6cqw;font:700 12.6cqw/.9 var(--sans);letter-spacing:-.04em;pointer-events:none;z-index:0;color:color-mix(in srgb,var(--c,var(--blue)) 14%,transparent);-webkit-text-stroke:.25cqw color-mix(in srgb,var(--c,var(--blue)) 70%,transparent)}
 .page>*:not(.bignum){position:relative;z-index:1}
+.kick.one{white-space:nowrap;letter-spacing:.1em;font-size:2.1cqw}
+.lead a{white-space:nowrap}
 .red{--c:var(--red)}.yellow{--c:var(--yellow)}.blue{--c:var(--blue)}
 .two{display:grid;grid-template-columns:1fr auto;gap:4cqw;align-items:center}
 .half{display:grid;grid-template-columns:1fr 1fr;gap:4cqw;align-items:start}
@@ -324,7 +402,7 @@ body:not(.js) #about .x{display:none}
 </style>
 </head>
 <body>
-<div id="field" aria-hidden="true"></div><div id="rays" aria-hidden="true"></div>
+<div id="field" aria-hidden="true"></div><div id="lava" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div><div id="bokeh"></div><div id="rays" aria-hidden="true"></div>
 <div id="stage">
   <div id="intro" role="button" aria-label="Intro film. Tap to enter.">
     <video id="introV" src="splash.mp4" muted playsinline autoplay preload="auto"></video>
@@ -397,7 +475,7 @@ body:not(.js) #about .x{display:none}
   <section class="page yellow" id="welcome" data-name="Welcome">
     <div class="welcome-top">
       <div class="cardbig" role="img" aria-label="Media Content Delivery business card"></div>
-      <div><div class="kick">Door 03 · welcome aboard</div><h2>Ovi Demetrian</h2></div>
+      <div><h2>Ovi Demetrian</h2></div>
     </div>
     <p class="lead" style="margin:0">20+ years in sound, AV systems, automation and networking. Platform-agnostic: the technology underneath matters more than any one brand.</p>
     <ul class="order"><li><b>1</b>Installer &amp; hardware</li><li><b>2</b>Software &amp; interfaces</li><li><b>3</b>Logistics &amp; live</li><li><b>4</b>Working with Claude</li></ul>
@@ -633,7 +711,7 @@ A corporate presentation room at a company headquarters in Phoenix, designed, bu
       <li><b>Plan B:</b> with scripts off, every page still shows, stacked, and every link still works.</li>
       <li><b>Install it:</b> open ovidemetrian.github.io/portfolio and add it to your home screen.</li>
     </ul>
-    <p class="small" style="margin:0 0 2.4cqw">Portfolio v20 · 22 November 2026</p>
+    <p class="small" style="margin:0 0 2.4cqw">Portfolio v25 · 22 November 2026</p>
     <button class="x" id="aboutX">CLOSE ✕</button>
   </section>
 
