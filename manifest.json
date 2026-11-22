@@ -1,7 +1,7 @@
 {
-  "name": "PORTFOLOID · Ovi Demetrian",
-  "short_name": "PORTFOLOID",
-  "description": "Ovi Demetrian's portfolio, one square page at a time. Concepts by Ovi, programmed with Claude.",
+  "name": "Portfolio · Ovi Demetrian",
+  "short_name": "Portfolio",
+  "description": "Ovi Demetrian's portfolio, one square page at a time. Concept & design by Ovi, built with Claude.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
