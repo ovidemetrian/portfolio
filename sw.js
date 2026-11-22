@@ -1,5 +1,5 @@
 // Portfolio service worker — bump VERSION when you change files
-const VERSION = 'ovi-portfolio-v19';
+const VERSION = 'ovi-portfolio-v24';
 const SHELL = ['./', 'index.html', 'manifest.json', 'llms.txt', 'icon-192.png', 'icon-512.png', 'icon-180.png'];
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(VERSION).then(c => c.addAll(SHELL)).then(() => self.skipWaiting()));
